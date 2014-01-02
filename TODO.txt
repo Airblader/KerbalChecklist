@@ -1,0 +1,12 @@
+TODO:
+- make XML nodes capitilization consistent
+- make capitalization of methods consistent
+- save state of marked checkboxes with current vessel in editor, but not otherwise(!)
+
+
+- use XML version to auto-update document if needed
+- triggers to include certain checklists
+- automatically pre-check list items
+	- "hasParts" list for checklist item
+	- "delta-V"
+- give items a priority (only "Low", "Med", "high"?)

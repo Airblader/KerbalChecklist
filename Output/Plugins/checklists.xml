@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<KerbalChecklist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <version>1</version>
+  <checklists>
+    <Checklist name="First Checklist" visible="true">
+      <checklists />
+      <items>
+        <Item>
+          <name>Some Item</name>
+          <description>Foobar</description>
+        </Item>
+        <Item>
+          <name>Another Item</name>
+          <description>Baz</description>
+        </Item>
+      </items>
+    </Checklist>
+    <Checklist name="Second Checklist" visible="true">
+      <checklists />
+      <items>
+        <Item>
+          <name>Foo</name>
+          <description>Foobar</description>
+        </Item>
+        <Item>
+          <name>Bar</name>
+          <description>Baz</description>
+        </Item>
+      </items>
+    </Checklist>
+  </checklists>
+</KerbalChecklist>

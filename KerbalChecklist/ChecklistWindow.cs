@@ -1,0 +1,119 @@
+﻿using System.Collections.Generic;
+using UnityEngine;
+using Tac;
+
+namespace KerbalChecklist {
+
+    class ChecklistWindow : Window<KerbalChecklist> {
+
+        private List<Checklist> allChecklists;
+        private List<Checklist> selectedChecklists;
+
+        private GUIStyle buttonStyle;
+        private GUIStyle labelStyle;
+        private GUIStyle editStyle;
+
+        private Vector2 checklistItemsScrollPosition = Vector2.zero;
+
+        private const int DEFAULT_WINDOW_WIDTH = 400;
+        private const int DEFAULT_WINDOW_HEIGHT = 500;
+
+        public ChecklistWindow( ref List<Checklist> allChecklists )
+            : base( "KerbalChecklist", DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT ) {
+
+            this.allChecklists = allChecklists;
+            this.selectedChecklists = allChecklists;
+        }
+
+        public static void CopyCompactSkin() {
+            GUI.skin = null;
+            GUISkin compactSkin = (GUISkin) GameObject.Instantiate( GUI.skin );
+
+            compactSkin.label.margin = new RectOffset( 1, 1, 1, 1 );
+            compactSkin.label.padding = new RectOffset( 0, 0, 2, 2 );
+
+            compactSkin.button.margin = new RectOffset( 1, 1, 1, 1 );
+            compactSkin.button.padding = new RectOffset( 4, 4, 2, 2 );
+
+            compactSkin.toggle.margin = new RectOffset( 1, 1, 1, 1 );
+            compactSkin.toggle.padding = new RectOffset( 15, 0, 2, 0 );
+
+            compactSkin.textField.margin = new RectOffset( 1, 1, 1, 1 );
+            compactSkin.textField.padding = new RectOffset( 2, 2, 2, 2 );
+
+            compactSkin.textArea.margin = new RectOffset( 1, 1, 1, 1 );
+            compactSkin.textArea.padding = new RectOffset( 2, 2, 2, 2 );
+
+            compactSkin.window.margin = new RectOffset( 0, 0, 0, 0 );
+            compactSkin.window.padding = new RectOffset( 5, 5, 20, 5 );
+            GUI.skin = compactSkin;
+        }
+
+
+        protected override void DrawWindowContents( int windowID ) {
+            checklistItemsScrollPosition = GUILayout.BeginScrollView( checklistItemsScrollPosition );
+
+            foreach( Checklist checklist in selectedChecklists ) {
+                GUILayout.BeginHorizontal();
+                GUILayout.Label( checklist.name, labelStyle );
+                GUILayout.EndHorizontal();
+
+                // TODO sort items by state
+                foreach( Item item in checklist.items ) {
+                    GUILayout.BeginHorizontal();
+                    item.isChecked = GUILayout.Toggle( item.isChecked, item.name );
+                    GUILayout.EndHorizontal();
+                }
+
+                // TODO display mixin lists
+            }
+            GUILayout.EndScrollView();
+
+            if( GUILayout.Button( "Select Checklists", buttonStyle ) ) {
+                // TODO open window to select current checklists
+                // (consider visible attribute)
+            }
+        }
+
+        protected override void ConfigureStyles() {
+            CopyCompactSkin();
+            base.ConfigureStyles();
+
+            if( buttonStyle == null ) {
+                configureButtonStyle();
+            }
+
+            if( labelStyle == null ) {
+                configureLabelStyle();
+            }
+
+            if( editStyle == null ) {
+                configureEditStyle();
+            }
+        }
+
+        private void configureButtonStyle() {
+            buttonStyle = new GUIStyle( GUI.skin.button );
+            /*buttonStyle.alignment = TextAnchor.LowerCenter;
+            buttonStyle.fontStyle = FontStyle.Normal;
+            buttonStyle.padding.top = 3;
+            buttonStyle.padding.bottom = 1;
+            buttonStyle.stretchWidth = false;
+            buttonStyle.stretchHeight = false;*/
+        }
+
+        private void configureLabelStyle() {
+            labelStyle = new GUIStyle( GUI.skin.label );
+            /*labelStyle.alignment = TextAnchor.MiddleRight;
+            labelStyle.fontStyle = FontStyle.Normal;
+            labelStyle.wordWrap = false;*/
+        }
+
+        private void configureEditStyle() {
+            editStyle = new GUIStyle( GUI.skin.textField );
+            //editStyle.fontStyle = FontStyle.Normal;
+        }
+
+    }
+
+}
