@@ -42,14 +42,14 @@ namespace KerbalChecklist {
 
             foreach( Checklist checklist in selectedChecklists ) {
                 GUILayout.BeginHorizontal();
+                // TODO display ("(5/10)")
                 GUILayout.Label( checklist.name, labelStyle );
                 GUILayout.EndHorizontal();
 
                 // TODO sort items by state
                 foreach( Item item in checklist.items ) {
                     GUILayout.BeginHorizontal();
-                    item.isChecked = GUILayout.Toggle( item.isChecked, item.name );
-                    // TODO show description
+                    item.isChecked = GUILayout.Toggle( item.isChecked, new GUIContent( item.name, item.description ) );
                     GUILayout.EndHorizontal();
                 }
 
