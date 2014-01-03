@@ -14,8 +14,8 @@ namespace KerbalChecklist {
 
         void Awake() {
             checklists = Checklists.Load( CONFIG_FILENAME );
-            checklistWindow = new ChecklistWindow( ref checklists.checklists );
-            
+            checklistWindow = new ChecklistWindow( checklists );
+
             // TODO add Tooltip button
         }
 

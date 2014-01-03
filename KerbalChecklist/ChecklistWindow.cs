@@ -7,7 +7,7 @@ namespace KerbalChecklist {
 
     class ChecklistWindow : Window<KerbalChecklist> {
 
-        private List<Checklist> allChecklists;
+        private Checklists checklists;
         private List<Checklist> selectedChecklists;
 
         private Vector2 checklistItemsScrollPosition = Vector2.zero;
@@ -18,22 +18,20 @@ namespace KerbalChecklist {
         private const int DEFAULT_WINDOW_WIDTH = 300;
         private const int DEFAULT_WINDOW_HEIGHT = 300;
 
-        public ChecklistWindow( ref List<Checklist> allChecklists )
+        public ChecklistWindow( Checklists checklists )
             : base( "KerbalChecklist", DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT ) {
 
-            this.allChecklists = allChecklists;
-            this.selectedChecklists = allChecklists;
+            this.checklists = checklists;
+            this.selectedChecklists = checklists.checklists;
         }
 
         private int getNumberOfCheckedItems( Checklist checklist ) {
             int numberOfCheckedItems = 0;
-            foreach( Item item in checklist.items ) {
+            foreach( Item item in checklist.GetItemsRecursively( checklists ) ) {
                 if( item.isChecked ) {
                     numberOfCheckedItems++;
                 }
             }
-
-            // TODO check mix-in lists
 
             return numberOfCheckedItems;
         }
@@ -47,14 +45,12 @@ namespace KerbalChecklist {
                 GUILayout.Label( checklist.name, checklistSectionHeaderLabelStyle );
                 GUILayout.EndHorizontal();
 
-                foreach( Item item in checklist.items ) {
+                foreach( Item item in checklist.GetItemsRecursively( checklists ) ) {
                     GUILayout.BeginHorizontal();
                     item.isChecked = GUILayout.Toggle( item.isChecked, new GUIContent( item.name, item.description ),
                         checklistToggleStyle );
                     GUILayout.EndHorizontal();
                 }
-
-                // TODO display mixin lists
             }
             GUILayout.EndScrollView();
 
