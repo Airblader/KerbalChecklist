@@ -41,8 +41,9 @@ namespace KerbalChecklist {
 
             foreach( Checklist checklist in selectedChecklists ) {
                 GUILayout.BeginHorizontal( checklistSectionHeaderBackgroundStyle );
-                // TODO display ("(5/10)")
-                GUILayout.Label( checklist.name, checklistSectionHeaderLabelStyle );
+                string label = checklist.name + " (" + getNumberOfCheckedItems( checklist )
+                    + "/" + checklist.GetItemsRecursively( checklists ).Count + ")";
+                GUILayout.Label( label, checklistSectionHeaderLabelStyle, GUILayout.ExpandWidth( true ) );
                 GUILayout.EndHorizontal();
 
                 foreach( Item item in checklist.GetItemsRecursively( checklists ) ) {
@@ -98,7 +99,7 @@ namespace KerbalChecklist {
             GUISkin skin = (GUISkin) GameObject.Instantiate( GUI.skin );
             skin.window.padding = new RectOffset( 5, 5, 20, 5 );
 
-            // TODO scrollview background
+            skin.label.alignment = TextAnchor.MiddleLeft;
 
             GUI.skin = skin;
         }
