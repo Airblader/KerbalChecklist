@@ -10,7 +10,7 @@ namespace KerbalChecklist {
         private Checklists checklists;
 
         public SelectionWindow( Checklists checklists )
-            : base( "KerbalChecklist", 200, 200 ) {
+            : base( "Select Checklists", 200, 200 ) {
 
             this.checklists = checklists;
         }
