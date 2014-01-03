@@ -7,24 +7,72 @@ namespace KerbalChecklist {
 
     class SelectionWindow : Window<KerbalChecklist> {
 
-        private Checklists checklists;
+        private List<SelectableChecklist> checklists;
+
+        private GUIStyle selectedStyle;
+        private GUIStyle unselectedStyle;
 
         public SelectionWindow( Checklists checklists )
             : base( "Select Checklists", 200, 200 ) {
 
-            this.checklists = checklists;
+            this.checklists = new List<SelectableChecklist>();
+            foreach( Checklist checklist in checklists.checklists ) {
+                if( !checklist.visible ) {
+                    continue;
+                }
+
+                this.checklists.Add( new SelectableChecklist( checklist ) );
+            }
         }
 
         protected override void DrawWindowContents( int windowID ) {
-            // TODO
+            GUILayout.BeginScrollView( Vector2.zero );
+            foreach( SelectableChecklist checklist in checklists ) {
+                GUILayout.BeginHorizontal( checklist.isSelected ? selectedStyle : unselectedStyle );
+                // TODO check this again
+                if( GUILayout.Button( checklist.checklist.name, GUI.skin.label ) ) {
+                    checklist.isSelected = !checklist.isSelected;
+                    // TODO remove
+                    Logging.Log( "KerbalChecklist", "Clicked " + checklist.checklist.name
+                        + " for new state " + checklist.isSelected );
+                }
+                GUILayout.EndHorizontal();
+            }
+            GUILayout.EndScrollView();
+
             GUILayout.BeginHorizontal();
-            GUILayout.Button( "Foo" );
+            if( GUILayout.Button( "Select" ) ) {
+                SetVisible( false );
+                // TODO transfer to other window and focus it
+            }
             GUILayout.EndHorizontal();
         }
 
         override protected void ConfigureStyles() {
             GuiUtils.SetupGuiSkin();
             base.ConfigureStyles();
+
+            if( selectedStyle == null ) {
+                selectedStyle = new GUIStyle( GUI.skin.label );
+                selectedStyle.normal.background =
+                    GuiUtils.createSolidColorTexture( new Color( 1f, 1f, 1f, 0.2f ) );
+            }
+
+            if( unselectedStyle == null ) {
+                unselectedStyle = new GUIStyle( GUI.skin.label );
+            }
+        }
+
+    }
+
+    internal class SelectableChecklist {
+
+        public Checklist checklist;
+        public bool isSelected;
+
+        public SelectableChecklist( Checklist checklist, bool isSelected = false ) {
+            this.checklist = checklist;
+            this.isSelected = isSelected;
         }
 
     }
