@@ -81,6 +81,7 @@ namespace KerbalChecklist {
             GUILayout.BeginHorizontal();
             if( GUILayout.Button( "Select Checklists" ) ) {
                 selectionWindow.SetVisible( true );
+                GUI.FocusWindow( selectionWindow.windowId );
             }
             GUILayout.EndHorizontal();
         }

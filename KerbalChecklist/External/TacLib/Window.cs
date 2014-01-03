@@ -37,7 +37,7 @@ namespace Tac
     public abstract class Window<T>
     {
         private string windowTitle;
-        private int windowId;
+        public int windowId;
         private string configNodeName;
         protected Rect windowPos;
         private bool mouseDown;
