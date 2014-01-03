@@ -54,7 +54,7 @@ namespace KerbalChecklist {
             return true;
         }
 
-        public Checklist getChecklistByName( String name ) {
+        public Checklist GetChecklistByName( String name ) {
             foreach( Checklist checklist in checklists ) {
                 if( checklist.name == name ) {
                     return checklist;
