@@ -23,30 +23,16 @@ namespace KerbalChecklist {
 
             this.allChecklists = allChecklists;
             this.selectedChecklists = allChecklists;
+            this.HideCloseButton = true;
         }
 
         public static void CopyCompactSkin() {
             GUI.skin = null;
-            GUISkin compactSkin = (GUISkin) GameObject.Instantiate( GUI.skin );
+            
+            GUISkin skin = (GUISkin) GameObject.Instantiate( GUI.skin );
+            skin.window.padding = new RectOffset( 5, 5, 20, 20 );
 
-            compactSkin.label.margin = new RectOffset( 1, 1, 1, 1 );
-            compactSkin.label.padding = new RectOffset( 0, 0, 2, 2 );
-
-            compactSkin.button.margin = new RectOffset( 1, 1, 1, 1 );
-            compactSkin.button.padding = new RectOffset( 4, 4, 2, 2 );
-
-            compactSkin.toggle.margin = new RectOffset( 1, 1, 1, 1 );
-            compactSkin.toggle.padding = new RectOffset( 15, 0, 2, 0 );
-
-            compactSkin.textField.margin = new RectOffset( 1, 1, 1, 1 );
-            compactSkin.textField.padding = new RectOffset( 2, 2, 2, 2 );
-
-            compactSkin.textArea.margin = new RectOffset( 1, 1, 1, 1 );
-            compactSkin.textArea.padding = new RectOffset( 2, 2, 2, 2 );
-
-            compactSkin.window.margin = new RectOffset( 0, 0, 0, 0 );
-            compactSkin.window.padding = new RectOffset( 5, 5, 20, 5 );
-            GUI.skin = compactSkin;
+            GUI.skin = skin;
         }
 
 
@@ -62,6 +48,7 @@ namespace KerbalChecklist {
                 foreach( Item item in checklist.items ) {
                     GUILayout.BeginHorizontal();
                     item.isChecked = GUILayout.Toggle( item.isChecked, item.name );
+                    // TODO show description
                     GUILayout.EndHorizontal();
                 }
 

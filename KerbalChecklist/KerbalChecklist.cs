@@ -16,7 +16,7 @@ namespace KerbalChecklist {
             checklists = Checklists.Load( CONFIG_FILENAME );
             checklistWindow = new ChecklistWindow( ref checklists.checklists );
 
-            // TODO redo this
+            // TODO redo this to not use TacLib
             ButtonWrapper button = new ButtonWrapper(
                 new Rect( Screen.width * 0.7f, 0, 32, 32 ), "", "KC", 
                 "KerbalChecklist", OnIconClicked );
