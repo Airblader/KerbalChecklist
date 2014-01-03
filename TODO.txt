@@ -1,6 +1,4 @@
 TODO:
-- make XML nodes capitilization consistent
-- make capitalization of methods consistent
 - save state of marked checkboxes with current vessel in editor, but not otherwise(!)
 - add toggle for display to main vessel?
 
