@@ -66,7 +66,7 @@ namespace KerbalChecklist {
 
     }
 
-    [XmlType("checklist")]
+    [XmlType( "checklist" )]
     public class Checklist {
 
         [XmlAttribute()]
