@@ -10,6 +10,8 @@ namespace KerbalChecklist {
         private Checklists checklists;
         private List<Checklist> selectedChecklists;
 
+        private bool displayCheckedItems = true;
+
         private Vector2 checklistItemsScrollPosition = Vector2.zero;
         private GUIStyle checklistSectionHeaderBackgroundStyle;
         private GUIStyle checklistSectionHeaderLabelStyle;
@@ -47,6 +49,10 @@ namespace KerbalChecklist {
                 GUILayout.EndHorizontal();
 
                 foreach( Item item in checklist.GetItemsRecursively( checklists ) ) {
+                    if( item.isChecked && !displayCheckedItems ) {
+                        continue;
+                    }
+
                     GUILayout.BeginHorizontal();
                     item.isChecked = GUILayout.Toggle( item.isChecked, new GUIContent( item.name, item.description ),
                         checklistToggleStyle );
@@ -60,7 +66,7 @@ namespace KerbalChecklist {
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
-            GUILayout.Toggle( true, "Display checked items" );
+            displayCheckedItems = GUILayout.Toggle( displayCheckedItems, "Display checked items" );
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
