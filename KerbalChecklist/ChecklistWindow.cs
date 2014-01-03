@@ -9,6 +9,7 @@ namespace KerbalChecklist {
 
         private Checklists checklists;
         private List<Checklist> selectedChecklists;
+        private SelectionWindow selectionWindow;
 
         private bool displayCheckedItems = true;
 
@@ -26,6 +27,8 @@ namespace KerbalChecklist {
 
             this.checklists = checklists;
             this.selectedChecklists = checklists.checklists;
+
+            this.selectionWindow = new SelectionWindow( checklists );
         }
 
         private int getNumberOfCheckedItems( Checklist checklist ) {
@@ -39,6 +42,7 @@ namespace KerbalChecklist {
             return numberOfCheckedItems;
         }
 
+        // TODO refactor this
         protected override void DrawWindowContents( int windowID ) {
             checklistItemsScrollPosition = GUILayout.BeginScrollView( checklistItemsScrollPosition );
 
@@ -76,26 +80,25 @@ namespace KerbalChecklist {
 
             GUILayout.BeginHorizontal();
             if( GUILayout.Button( "Select Checklists" ) ) {
-                // TODO open window to select current checklists
-                // (consider visible attribute)
+                selectionWindow.SetVisible( true );
             }
             GUILayout.EndHorizontal();
         }
 
         override protected void ConfigureStyles() {
-            SetupGuiSkin();
+            GuiUtils.SetupGuiSkin();
             base.ConfigureStyles();
 
             if( checklistSectionHeaderBackgroundStyle == null ) {
                 checklistSectionHeaderBackgroundStyle = new GUIStyle( GUI.skin.label );
                 checklistSectionHeaderBackgroundStyle.normal.background =
-                    createSolidColorTexture( new Color( 1f, 1f, 1f, 0.2f ) );
+                    GuiUtils.createSolidColorTexture( new Color( 1f, 1f, 1f, 0.2f ) );
             }
 
             if( checklistSectionDoneHeaderBackgroundStyle == null ) {
                 checklistSectionDoneHeaderBackgroundStyle = new GUIStyle( checklistSectionHeaderBackgroundStyle );
                 checklistSectionDoneHeaderBackgroundStyle.normal.background =
-                    createSolidColorTexture( new Color( 0.7f, 1f, 0.7f, 0.2f ) );
+                    GuiUtils.createSolidColorTexture( new Color( 0.7f, 1f, 0.7f, 0.2f ) );
             }
 
             if( checklistSectionHeaderLabelStyle == null ) {
@@ -108,25 +111,6 @@ namespace KerbalChecklist {
                 checklistToggleStyle = new GUIStyle( GUI.skin.toggle );
                 checklistToggleStyle.margin = new RectOffset( 15, 0, 2, 2 );
             }
-        }
-
-        private void SetupGuiSkin() {
-            GUI.skin = null;
-
-            GUISkin skin = (GUISkin) GameObject.Instantiate( GUI.skin );
-            skin.window.padding = new RectOffset( 5, 5, 20, 5 );
-
-            skin.label.alignment = TextAnchor.MiddleLeft;
-
-            GUI.skin = skin;
-        }
-
-        private Texture2D createSolidColorTexture( Color color ) {
-            Texture2D texture = new Texture2D( 1, 1 );
-            texture.SetPixel( 0, 0, color );
-            texture.Apply();
-
-            return texture;
         }
 
     }

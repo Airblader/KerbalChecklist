@@ -68,6 +68,7 @@
     <Compile Include="ChecklistWindow.cs" />
     <Compile Include="Checklist.cs" />
     <Compile Include="FileUtils.cs" />
+    <Compile Include="GuiUtils.cs" />
     <Compile Include="KerbalChecklist.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="External\TacLib\ButtonWrapper.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="External\TacLib\ToolbarWrapper.cs" />
     <Compile Include="External\TacLib\Utilities.cs" />
     <Compile Include="External\TacLib\Window.cs" />
+    <Compile Include="SelectionWindow.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
