@@ -23,14 +23,15 @@ namespace KerbalChecklist {
 
             this.allChecklists = allChecklists;
             this.selectedChecklists = allChecklists;
-            this.HideCloseButton = true;
         }
 
+        // TODO rename/refactor
         public static void CopyCompactSkin() {
             GUI.skin = null;
-            
+
             GUISkin skin = (GUISkin) GameObject.Instantiate( GUI.skin );
-            skin.window.padding = new RectOffset( 5, 5, 20, 20 );
+            skin.window.padding = new RectOffset( 5, 5, 20, 5 );
+            // TODO scrollview background
 
             GUI.skin = skin;
         }

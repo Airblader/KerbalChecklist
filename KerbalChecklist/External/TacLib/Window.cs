@@ -199,7 +199,8 @@ namespace Tac
 
             if (!HideCloseButton)
             {
-                if (GUI.Button(new Rect(windowPos.width - 24, 4, 20, 20), "X", closeButtonStyle))
+                // the default skin's window title bar has a height of 18, so we fix this button
+                if (GUI.Button(new Rect(windowPos.width - 15, 3, 12, 12), "", closeButtonStyle))
                 {
                     SetVisible(false);
                 }
@@ -207,10 +208,10 @@ namespace Tac
 
             if (Resizable)
             {
-                var resizeRect = new Rect(windowPos.width - 16, windowPos.height - 16, 16, 16);
-                GUI.Label(resizeRect, resizeContent, resizeStyle);
-
-                HandleWindowEvents(resizeRect);
+                // TODO consider border is outside (= add extra space?)
+                HandleWindowEvents( new Rect( windowPos.width - 5, windowPos.height - 5, 5, 5 ) );
+                HandleWindowEvents( new Rect( windowPos.width - 10, windowPos.height - 3, 5, 3 ) );
+                HandleWindowEvents( new Rect( windowPos.width - 3, windowPos.height - 10, 3, 5 ) );
             }
 
             GUI.DragWindow();
