@@ -66,6 +66,7 @@ namespace KerbalChecklist {
 
     }
 
+    [XmlType("checklist")]
     public class Checklist {
 
         [XmlAttribute()]
@@ -97,6 +98,7 @@ namespace KerbalChecklist {
 
     }
 
+    [XmlType( "item" )]
     public class Item {
 
         public String name;
