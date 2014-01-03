@@ -14,6 +14,7 @@ namespace KerbalChecklist {
 
         private Vector2 checklistItemsScrollPosition = Vector2.zero;
         private GUIStyle checklistSectionHeaderBackgroundStyle;
+        private GUIStyle checklistSectionDoneHeaderBackgroundStyle;
         private GUIStyle checklistSectionHeaderLabelStyle;
         private GUIStyle checklistToggleStyle;
 
@@ -42,9 +43,13 @@ namespace KerbalChecklist {
             checklistItemsScrollPosition = GUILayout.BeginScrollView( checklistItemsScrollPosition );
 
             foreach( Checklist checklist in selectedChecklists ) {
-                GUILayout.BeginHorizontal( checklistSectionHeaderBackgroundStyle );
-                string label = checklist.name + " (" + getNumberOfCheckedItems( checklist )
-                    + "/" + checklist.GetItemsRecursively( checklists ).Count + ")";
+                int numberOfCheckedItems = getNumberOfCheckedItems( checklist );
+                int numberOfItems = checklist.GetItemsRecursively( checklists ).Count;
+
+                GUILayout.BeginHorizontal( numberOfCheckedItems == numberOfItems
+                    ? checklistSectionDoneHeaderBackgroundStyle : checklistSectionHeaderBackgroundStyle );
+                string label = checklist.name + " (" + numberOfCheckedItems + "/"
+                    + numberOfItems + ")";
                 GUILayout.Label( label, checklistSectionHeaderLabelStyle, GUILayout.ExpandWidth( true ) );
                 GUILayout.EndHorizontal();
 
@@ -85,6 +90,12 @@ namespace KerbalChecklist {
                 checklistSectionHeaderBackgroundStyle = new GUIStyle( GUI.skin.label );
                 checklistSectionHeaderBackgroundStyle.normal.background =
                     createSolidColorTexture( new Color( 1f, 1f, 1f, 0.2f ) );
+            }
+
+            if( checklistSectionDoneHeaderBackgroundStyle == null ) {
+                checklistSectionDoneHeaderBackgroundStyle = new GUIStyle( checklistSectionHeaderBackgroundStyle );
+                checklistSectionDoneHeaderBackgroundStyle.normal.background =
+                    createSolidColorTexture( new Color( 0.7f, 1f, 0.7f, 0.2f ) );
             }
 
             if( checklistSectionHeaderLabelStyle == null ) {
