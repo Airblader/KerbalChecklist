@@ -100,8 +100,6 @@ namespace KerbalChecklist {
             List<Item> allItems = items;
             foreach( string listName in checklists ) {
                 Checklist list = parent.GetChecklistByName( listName );
-
-                allItems.AddRange( list.items );
                 allItems.AddRange( list.GetItemsRecursively( parent ) );
             }
 
