@@ -59,6 +59,10 @@ namespace KerbalChecklist {
                 string label = checklist.name + " (" + numberOfCheckedItems + "/"
                     + numberOfItems + ")";
                 GUILayout.Label( label, checklistSectionHeaderLabelStyle, GUILayout.ExpandWidth( true ) );
+                if( GUILayout.Button( new GUIContent( "X", "Remove this checklist" ), GUILayout.ExpandWidth( false ) ) ) {
+                    selectedChecklists.Remove( checklist );
+                    // TODO this causes sync errors with SelectionWindow
+                }
                 GUILayout.EndHorizontal();
 
                 foreach( Item item in checklist.GetItemsRecursively( checklists ) ) {
