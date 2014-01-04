@@ -73,6 +73,8 @@ namespace KerbalChecklist {
         public String name;
         [XmlAttribute()]
         public bool visible;
+        [XmlIgnore()]
+        public bool isSelected = false;
 
         public List<string> checklists = new List<string>();
         public List<Item> items = new List<Item>();
@@ -81,9 +83,10 @@ namespace KerbalChecklist {
             // for XML serialization        
         }
 
-        public Checklist( String name, bool visible = true ) {
+        public Checklist( String name, bool visible = true, bool isSelected = false ) {
             this.name = name;
             this.visible = visible;
+            this.isSelected = isSelected;
         }
 
         public Checklist AddItem( Item item ) {

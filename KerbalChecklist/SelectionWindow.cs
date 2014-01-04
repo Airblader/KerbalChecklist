@@ -7,7 +7,7 @@ namespace KerbalChecklist {
 
     class SelectionWindow : Window<KerbalChecklist> {
 
-        private List<SelectableChecklist> checklists;
+        private List<Checklist> checklists;
         private Action<List<Checklist>> onSelected;
 
         private GUIStyle selectedStyle;
@@ -16,19 +16,19 @@ namespace KerbalChecklist {
         public SelectionWindow( List<Checklist> checklists, Action<List<Checklist>> onSelected )
             : base( "Select Checklists", 200, 200 ) {
 
-            this.checklists = new List<SelectableChecklist>();
+            this.checklists = new List<Checklist>();
             this.onSelected = onSelected;
             foreach( Checklist checklist in checklists ) {
                 if( !checklist.visible ) {
                     continue;
                 }
 
-                this.checklists.Add( new SelectableChecklist( checklist ) );
+                this.checklists.Add( checklist );
             }
         }
 
         private void SetAllChecklists( bool selected ) {
-            foreach( SelectableChecklist list in checklists ) {
+            foreach( Checklist list in checklists ) {
                 list.isSelected = selected;
             }
         }
@@ -45,9 +45,9 @@ namespace KerbalChecklist {
             GUILayout.EndHorizontal();
 
             GUILayout.BeginScrollView( Vector2.zero );
-            foreach( SelectableChecklist checklist in checklists ) {
+            foreach( Checklist checklist in checklists ) {
                 GUILayout.BeginHorizontal( checklist.isSelected ? selectedStyle : unselectedStyle );
-                if( GUILayout.Button( checklist.checklist.name, GUI.skin.label ) ) {
+                if( GUILayout.Button( checklist.name, GUI.skin.label ) ) {
                     checklist.isSelected = !checklist.isSelected;
                 }
                 GUILayout.EndHorizontal();
@@ -60,9 +60,9 @@ namespace KerbalChecklist {
                 // TODO focus other window
 
                 List<Checklist> selectedLists = new List<Checklist>();
-                foreach( SelectableChecklist list in checklists ) {
+                foreach( Checklist list in checklists ) {
                     if( list.isSelected ) {
-                        selectedLists.Add( list.checklist );
+                        selectedLists.Add( list );
                     }
                 }
                 onSelected( selectedLists );
@@ -83,19 +83,6 @@ namespace KerbalChecklist {
             if( unselectedStyle == null ) {
                 unselectedStyle = new GUIStyle( GUI.skin.label );
             }
-        }
-
-    }
-
-    // TODO use DTO property instead
-    internal class SelectableChecklist {
-
-        public Checklist checklist;
-        public bool isSelected;
-
-        public SelectableChecklist( Checklist checklist, bool isSelected = false ) {
-            this.checklist = checklist;
-            this.isSelected = isSelected;
         }
 
     }
