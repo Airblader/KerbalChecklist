@@ -9,6 +9,17 @@ namespace KerbalChecklistUnitTest {
     public class ChecklistUnitTest {
 
         [TestMethod]
+        public void TestValidate() {
+            Checklists checklists = new Checklists();
+            checklists.AddChecklist( new Checklist( "Foo" ) );
+            checklists.AddChecklist( new Checklist( "Bar" ) );
+            Assert.AreEqual( true, checklists.Validate() );
+
+            checklists.AddChecklist( new Checklist( "Foo" ) );
+            Assert.AreEqual( false, checklists.Validate() );
+        }
+
+        [TestMethod]
         public void TestGetItemsRecursively() {
             Checklist innerInnerList = new Checklist( "Inner Inner List" );
             innerInnerList.AddItem( new Item( "Inner Inner List Item", "" ) );
