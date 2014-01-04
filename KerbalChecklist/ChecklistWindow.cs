@@ -68,9 +68,8 @@ namespace KerbalChecklist {
             GUILayout.BeginHorizontal( numberOfCheckedItems == numberOfItems
                 ? checklistSectionDoneHeaderBackgroundStyle : checklistSectionHeaderBackgroundStyle );
 
-            // TODO refactor this
-            string label = checklist.isCollapsed ? "▶ " : "▼ ";
-            label += checklist.name;
+            string label = checklist.isCollapsed ? "▶" : "▼";
+            label += " " + checklist.name;
             label += " (" + numberOfCheckedItems + "/" + numberOfItems + ")";
             if( GUILayout.Button( label, checklistSectionHeaderLabelStyle, GUILayout.ExpandWidth( true ) ) ) {
                 checklist.isCollapsed = !checklist.isCollapsed;

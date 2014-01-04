@@ -10,7 +10,7 @@ namespace KerbalChecklist {
     public class KerbalChecklist : MonoBehaviour {
 
         private const string CHECKLISTS_FILE = "checklists.xml";
-        private const string CONFIG_FILE = "KerbalChecklist.cfg";
+        private string configFile;
 
         private Checklists checklists;
         private ChecklistWindow checklistWindow;
@@ -19,6 +19,7 @@ namespace KerbalChecklist {
 
         void Awake() {
             Log.Debug( "Waking up..." );
+            configFile = IOUtils.GetFilePathFor( this.GetType(), "KerbalChecklist.cfg" );
 
             checklists = Checklists.Load( CHECKLISTS_FILE );
             checklistWindow = new ChecklistWindow( checklists );
@@ -49,8 +50,8 @@ namespace KerbalChecklist {
 
         private void Load() {
             Log.Debug( "Loading configuration..." );
-            if( File.Exists<KerbalChecklist>( CONFIG_FILE ) ) {
-                ConfigNode config = ConfigNode.Load( CONFIG_FILE );
+            if( File.Exists<KerbalChecklist>( configFile ) ) {
+                ConfigNode config = ConfigNode.Load( configFile );
 
                 checklistWindow.Load( config );
                 toolbarButton.Load( config );
@@ -64,7 +65,7 @@ namespace KerbalChecklist {
             checklistWindow.Save( config );
             toolbarButton.Save( config );
 
-            config.Save( CONFIG_FILE );
+            config.Save( configFile );
         }
 
     }
