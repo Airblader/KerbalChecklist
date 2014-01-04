@@ -46,11 +46,17 @@ namespace KerbalChecklist {
         }
 
         public bool Validate() {
-            // TODO implement
-            /*
-             * - checklist names are unique
-             */
+            List<string> listNames = new List<string>();
+            foreach( Checklist list in checklists ) {
+                if( listNames.Contains( list.name ) ) {
+                    Log.Error( "Duplicate list with name " + list.name + "." );
+                    return false;
+                }
 
+                listNames.Add( list.name );
+            }
+
+            Log.Debug( "Successfully validated loaded checklists." );
             return true;
         }
 
