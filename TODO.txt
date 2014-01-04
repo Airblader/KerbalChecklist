@@ -1,6 +1,5 @@
 TODO:
 - logging
-- rename to "Kerbal Checklist"
 - save state of marked checkboxes with current vessel in editor, but not otherwise(!)
 
 - use XML version to auto-update document if needed
