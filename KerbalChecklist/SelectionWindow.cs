@@ -8,27 +8,22 @@ namespace KerbalChecklist {
     class SelectionWindow : Window<KerbalChecklist> {
 
         private List<Checklist> checklists;
-        private Action<List<Checklist>> onSelected;
 
         private GUIStyle selectedStyle;
         private GUIStyle unselectedStyle;
 
-        public SelectionWindow( List<Checklist> checklists, Action<List<Checklist>> onSelected )
+        public SelectionWindow( ref List<Checklist> checklists )
             : base( "Select Checklists", 200, 200 ) {
 
-            this.checklists = new List<Checklist>();
-            this.onSelected = onSelected;
-            foreach( Checklist checklist in checklists ) {
-                if( !checklist.visible ) {
-                    continue;
-                }
-
-                this.checklists.Add( checklist );
-            }
+            this.checklists = checklists;
         }
 
         private void SetAllChecklists( bool selected ) {
             foreach( Checklist list in checklists ) {
+                if( !list.visible ) {
+                    continue;
+                }
+
                 list.isSelected = selected;
             }
         }
@@ -46,6 +41,10 @@ namespace KerbalChecklist {
 
             GUILayout.BeginScrollView( Vector2.zero );
             foreach( Checklist checklist in checklists ) {
+                if( !checklist.visible ) {
+                    continue;
+                }
+
                 GUILayout.BeginHorizontal( checklist.isSelected ? selectedStyle : unselectedStyle );
                 if( GUILayout.Button( checklist.name, GUI.skin.label ) ) {
                     checklist.isSelected = !checklist.isSelected;
@@ -55,17 +54,8 @@ namespace KerbalChecklist {
             GUILayout.EndScrollView();
 
             GUILayout.BeginHorizontal();
-            if( GUILayout.Button( "Select" ) ) {
+            if( GUILayout.Button( "Hide" ) ) {
                 SetVisible( false );
-                // TODO focus other window
-
-                List<Checklist> selectedLists = new List<Checklist>();
-                foreach( Checklist list in checklists ) {
-                    if( list.isSelected ) {
-                        selectedLists.Add( list );
-                    }
-                }
-                onSelected( selectedLists );
             }
             GUILayout.EndHorizontal();
         }

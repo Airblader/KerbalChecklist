@@ -8,7 +8,6 @@ namespace KerbalChecklist {
     class ChecklistWindow : Window<KerbalChecklist> {
 
         private Checklists checklists;
-        private List<Checklist> selectedChecklists;
         private SelectionWindow selectionWindow;
 
         private bool displayCheckedItems = true;
@@ -26,13 +25,7 @@ namespace KerbalChecklist {
             : base( "KerbalChecklist", DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT ) {
 
             this.checklists = checklists;
-            this.selectedChecklists = new List<Checklist>();
-
-            this.selectionWindow = new SelectionWindow( checklists.checklists, OnSelected );
-        }
-
-        private void OnSelected( List<Checklist> selectedLists ) {
-            this.selectedChecklists = selectedLists;
+            this.selectionWindow = new SelectionWindow( ref checklists.checklists );
         }
 
         private int getNumberOfCheckedItems( Checklist checklist ) {
@@ -50,7 +43,11 @@ namespace KerbalChecklist {
         protected override void DrawWindowContents( int windowID ) {
             checklistItemsScrollPosition = GUILayout.BeginScrollView( checklistItemsScrollPosition );
 
-            foreach( Checklist checklist in selectedChecklists ) {
+            foreach( Checklist checklist in checklists.checklists ) {
+                if( !checklist.isSelected ) {
+                    continue;
+                }
+
                 int numberOfCheckedItems = getNumberOfCheckedItems( checklist );
                 int numberOfItems = checklist.GetItemsRecursively( checklists ).Count;
 
@@ -60,8 +57,7 @@ namespace KerbalChecklist {
                     + numberOfItems + ")";
                 GUILayout.Label( label, checklistSectionHeaderLabelStyle, GUILayout.ExpandWidth( true ) );
                 if( GUILayout.Button( new GUIContent( "X", "Remove this checklist" ), GUILayout.ExpandWidth( false ) ) ) {
-                    selectedChecklists.Remove( checklist );
-                    // TODO this causes sync errors with SelectionWindow
+                    checklist.isSelected = false;
                 }
                 GUILayout.EndHorizontal();
 
