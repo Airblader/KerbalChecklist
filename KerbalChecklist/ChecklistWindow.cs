@@ -28,7 +28,7 @@ namespace KerbalChecklist {
             this.checklists = checklists;
             this.selectedChecklists = new List<Checklist>();
 
-            this.selectionWindow = new SelectionWindow( checklists, OnSelected );
+            this.selectionWindow = new SelectionWindow( checklists.checklists, OnSelected );
         }
 
         private void OnSelected( List<Checklist> selectedLists ) {

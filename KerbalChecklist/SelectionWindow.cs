@@ -13,12 +13,12 @@ namespace KerbalChecklist {
         private GUIStyle selectedStyle;
         private GUIStyle unselectedStyle;
 
-        public SelectionWindow( Checklists checklists, Action<List<Checklist>> onSelected )
+        public SelectionWindow( List<Checklist> checklists, Action<List<Checklist>> onSelected )
             : base( "Select Checklists", 200, 200 ) {
 
             this.checklists = new List<SelectableChecklist>();
             this.onSelected = onSelected;
-            foreach( Checklist checklist in checklists.checklists ) {
+            foreach( Checklist checklist in checklists ) {
                 if( !checklist.visible ) {
                     continue;
                 }

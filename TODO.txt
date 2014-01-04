@@ -1,6 +1,6 @@
 TODO:
+- click on checklist header collapses it
 - save state of marked checkboxes with current vessel in editor, but not otherwise(!)
-- add toggle for display to main vessel?
 
 - use XML version to auto-update document if needed
 - triggers to include certain checklists
