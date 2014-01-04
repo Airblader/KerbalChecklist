@@ -8,14 +8,16 @@ namespace KerbalChecklist {
     class SelectionWindow : Window<KerbalChecklist> {
 
         private List<SelectableChecklist> checklists;
+        private Action<List<Checklist>> onSelected;
 
         private GUIStyle selectedStyle;
         private GUIStyle unselectedStyle;
 
-        public SelectionWindow( Checklists checklists )
+        public SelectionWindow( Checklists checklists, Action<List<Checklist>> onSelected )
             : base( "Select Checklists", 200, 200 ) {
 
             this.checklists = new List<SelectableChecklist>();
+            this.onSelected = onSelected;
             foreach( Checklist checklist in checklists.checklists ) {
                 if( !checklist.visible ) {
                     continue;
@@ -39,7 +41,15 @@ namespace KerbalChecklist {
             GUILayout.BeginHorizontal();
             if( GUILayout.Button( "Select" ) ) {
                 SetVisible( false );
-                // TODO transfer to other window and focus it
+                // TODO focus other window
+
+                List<Checklist> selectedLists = new List<Checklist>();
+                foreach( SelectableChecklist list in checklists ) {
+                    if( list.isSelected ) {
+                        selectedLists.Add( list.checklist );
+                    }
+                }
+                onSelected( selectedLists );
             }
             GUILayout.EndHorizontal();
         }
@@ -61,6 +71,7 @@ namespace KerbalChecklist {
 
     }
 
+    // TODO use DTO property instead
     internal class SelectableChecklist {
 
         public Checklist checklist;

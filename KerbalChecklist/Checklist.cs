@@ -113,7 +113,6 @@ namespace KerbalChecklist {
 
         public String name;
         public String description;
-        // TODO this doesn't belong into the DTO
         [XmlIgnore]
         public bool isChecked = false;
 
