@@ -8,6 +8,17 @@ namespace KerbalChecklistUnitTest {
     [TestClass]
     public class ChecklistUnitTest {
 
+        [ClassInitialize()]
+        public static void ClassInit( TestContext context ) {
+            Log.ACTIVE = false;
+        }
+
+        [ClassCleanup()]
+        public static void ClassCleanup() {
+            Log.ACTIVE = true;
+        }
+
+
         [TestMethod]
         public void TestValidate() {
             Checklists checklists = new Checklists();
