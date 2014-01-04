@@ -29,12 +29,8 @@ namespace KerbalChecklist {
             GUILayout.BeginScrollView( Vector2.zero );
             foreach( SelectableChecklist checklist in checklists ) {
                 GUILayout.BeginHorizontal( checklist.isSelected ? selectedStyle : unselectedStyle );
-                // TODO check this again
                 if( GUILayout.Button( checklist.checklist.name, GUI.skin.label ) ) {
                     checklist.isSelected = !checklist.isSelected;
-                    // TODO remove
-                    Logging.Log( "KerbalChecklist", "Clicked " + checklist.checklist.name
-                        + " for new state " + checklist.isSelected );
                 }
                 GUILayout.EndHorizontal();
             }
