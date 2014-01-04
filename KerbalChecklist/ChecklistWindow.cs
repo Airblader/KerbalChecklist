@@ -22,7 +22,7 @@ namespace KerbalChecklist {
         private const int DEFAULT_WINDOW_HEIGHT = 300;
 
         public ChecklistWindow( Checklists checklists )
-            : base( "KerbalChecklist", DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT ) {
+            : base( "Kerbal Checklist", DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT ) {
 
             this.checklists = checklists;
             this.selectionWindow = new SelectionWindow( ref checklists.checklists );
