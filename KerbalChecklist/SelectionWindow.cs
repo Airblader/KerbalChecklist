@@ -27,7 +27,23 @@ namespace KerbalChecklist {
             }
         }
 
+        private void SetAllChecklists( bool selected ) {
+            foreach( SelectableChecklist list in checklists ) {
+                list.isSelected = selected;
+            }
+        }
+
+        // TODO refactor this
         protected override void DrawWindowContents( int windowID ) {
+            GUILayout.BeginHorizontal();
+            if( GUILayout.Button( "All" ) ) {
+                SetAllChecklists( true );
+            }
+            if( GUILayout.Button( "None" ) ) {
+                SetAllChecklists( false );
+            }
+            GUILayout.EndHorizontal();
+
             GUILayout.BeginScrollView( Vector2.zero );
             foreach( SelectableChecklist checklist in checklists ) {
                 GUILayout.BeginHorizontal( checklist.isSelected ? selectedStyle : unselectedStyle );
