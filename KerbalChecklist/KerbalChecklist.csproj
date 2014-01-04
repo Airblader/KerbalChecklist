@@ -71,7 +71,6 @@
   <ItemGroup>
     <Compile Include="ChecklistWindow.cs" />
     <Compile Include="Checklist.cs" />
-    <Compile Include="FileUtils.cs" />
     <Compile Include="GuiUtils.cs" />
     <Compile Include="KerbalChecklist.cs" />
     <Compile Include="Log.cs" />

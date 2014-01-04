@@ -18,6 +18,7 @@ namespace KerbalChecklist {
         private GUIStyle checklistSectionHeaderLabelStyle;
         private GUIStyle checklistToggleStyle;
 
+
         private const int DEFAULT_WINDOW_WIDTH = 300;
         private const int DEFAULT_WINDOW_HEIGHT = 300;
 
@@ -71,10 +72,14 @@ namespace KerbalChecklist {
             string label = checklist.isCollapsed ? "▶" : "▼";
             label += " " + checklist.name;
             label += " (" + numberOfCheckedItems + "/" + numberOfItems + ")";
+
             if( GUILayout.Button( label, checklistSectionHeaderLabelStyle, GUILayout.ExpandWidth( true ) ) ) {
                 checklist.isCollapsed = !checklist.isCollapsed;
             }
-            if( GUILayout.Button( new GUIContent( "X", "Remove this checklist" ), GUILayout.ExpandWidth( false ) ) ) {
+
+            if( GUILayout.Button( new GUIContent( "X", "Remove this checklist" ),
+                GUILayout.ExpandWidth( false ) ) ) {
+
                 checklist.isSelected = false;
             }
 

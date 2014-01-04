@@ -20,7 +20,7 @@ namespace KerbalChecklist {
         }
 
         public void Save( string filename ) {
-            string fullFilename = FileUtils.getFullPathForFilename( filename );
+            string fullFilename = KSP.IO.IOUtils.GetFilePathFor( typeof( KerbalChecklist ), filename );
 
             XmlSerializer serializer = new XmlSerializer( typeof( Checklists ) );
             TextWriter streamWriter = new StreamWriter( fullFilename );
@@ -33,7 +33,7 @@ namespace KerbalChecklist {
         }
 
         public static Checklists Load( string filename ) {
-            string fullFilename = FileUtils.getFullPathForFilename( filename );
+            string fullFilename = KSP.IO.IOUtils.GetFilePathFor( typeof( KerbalChecklist ), filename );
 
             XmlSerializer serializer = new XmlSerializer( typeof( Checklists ) );
             FileStream fileStream = new FileStream( fullFilename, FileMode.Open );
