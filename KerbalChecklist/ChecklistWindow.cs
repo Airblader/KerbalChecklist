@@ -156,6 +156,16 @@ namespace KerbalChecklist {
             }
         }
 
+        override public ConfigNode Save( ConfigNode config ) {
+            selectionWindow.Save( config );
+            return base.Save( config );
+        }
+
+        public override ConfigNode Load( ConfigNode config ) {
+            selectionWindow.Load( config );
+            return base.Load( config );
+        }
+
     }
 
 }

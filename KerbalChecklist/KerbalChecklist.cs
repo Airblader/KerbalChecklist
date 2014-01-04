@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using KSP.IO;
 using UnityEngine;
 using Tac;
 
@@ -7,7 +8,8 @@ namespace KerbalChecklist {
     [KSPAddon( KSPAddon.Startup.EditorAny, false )]
     public class KerbalChecklist : MonoBehaviour {
 
-        public const string CONFIG_FILENAME = "checklists.xml";
+        private const string CHECKLISTS_FILE = "checklists.xml";
+        private const string CONFIG_FILE = "KerbalChecklist.cfg";
 
         private Checklists checklists; // TODO rename this
         private ChecklistWindow checklistWindow;
@@ -15,13 +17,14 @@ namespace KerbalChecklist {
         private ButtonWrapper toolbarButton;
 
         void Awake() {
-            checklists = Checklists.Load( CONFIG_FILENAME );
+            checklists = Checklists.Load( CHECKLISTS_FILE );
             checklistWindow = new ChecklistWindow( checklists );
 
             SetupToolbar();
         }
 
         void Start() {
+            Load();
             checklistWindow.SetVisible( true );
         }
 
@@ -32,6 +35,24 @@ namespace KerbalChecklist {
 
         internal void OnDestroy() {
             toolbarButton.Destroy();
+        }
+
+        private void Load() {
+            if( File.Exists<KerbalChecklist>( CONFIG_FILE ) ) {
+                ConfigNode config = ConfigNode.Load( CONFIG_FILE );
+
+                checklistWindow.Load( config );
+                toolbarButton.Load( config );
+            }
+        }
+
+        private void Save() {
+            ConfigNode config = new ConfigNode();
+
+            checklistWindow.Save( config );
+            toolbarButton.Save( config );
+
+            config.Save( CONFIG_FILE );
         }
 
     }
