@@ -48,6 +48,7 @@ namespace KerbalChecklist {
 
         private void DrawChecklists() {
             checklistItemsScrollPosition = GUILayout.BeginScrollView( checklistItemsScrollPosition );
+
             foreach( Checklist checklist in checklists.checklists ) {
                 if( !checklist.isSelected ) {
                     continue;
@@ -56,6 +57,7 @@ namespace KerbalChecklist {
                 DrawChecklistHeader( checklist );
                 DrawItems( checklist );
             }
+
             GUILayout.EndScrollView();
         }
 
@@ -65,6 +67,8 @@ namespace KerbalChecklist {
 
             GUILayout.BeginHorizontal( numberOfCheckedItems == numberOfItems
                 ? checklistSectionDoneHeaderBackgroundStyle : checklistSectionHeaderBackgroundStyle );
+
+            // TODO refactor this
             string label = checklist.isCollapsed ? "▶ " : "▼ ";
             label += checklist.name;
             label += " (" + numberOfCheckedItems + "/" + numberOfItems + ")";
@@ -74,6 +78,7 @@ namespace KerbalChecklist {
             if( GUILayout.Button( new GUIContent( "X", "Remove this checklist" ), GUILayout.ExpandWidth( false ) ) ) {
                 checklist.isSelected = false;
             }
+
             GUILayout.EndHorizontal();
         }
 
@@ -93,8 +98,10 @@ namespace KerbalChecklist {
 
         private void DrawItem( Item item ) {
             GUILayout.BeginHorizontal();
+
             item.isChecked = GUILayout.Toggle( item.isChecked, new GUIContent( item.name, item.description ),
                 checklistToggleStyle );
+
             GUILayout.EndHorizontal();
         }
 
@@ -112,10 +119,12 @@ namespace KerbalChecklist {
 
         private void DrawSelectChecklistsButton() {
             GUILayout.BeginHorizontal();
+
             if( GUILayout.Button( "Select Checklists" ) ) {
                 selectionWindow.SetVisible( true );
                 GUI.FocusWindow( selectionWindow.windowId );
             }
+
             GUILayout.EndHorizontal();
         }
 

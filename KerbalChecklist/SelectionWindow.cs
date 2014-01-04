@@ -28,35 +28,56 @@ namespace KerbalChecklist {
             }
         }
 
-        // TODO refactor this
         protected override void DrawWindowContents( int windowID ) {
+            DrawSelectAllOrNoneButtons();
+            DrawChecklists();
+            DrawHideButton();
+        }
+
+        private void DrawSelectAllOrNoneButtons() {
             GUILayout.BeginHorizontal();
+
             if( GUILayout.Button( "All" ) ) {
                 SetAllChecklists( true );
             }
             if( GUILayout.Button( "None" ) ) {
                 SetAllChecklists( false );
             }
-            GUILayout.EndHorizontal();
 
+            GUILayout.EndHorizontal();
+        }
+
+        private void DrawChecklists() {
             GUILayout.BeginScrollView( Vector2.zero );
+
             foreach( Checklist checklist in checklists ) {
                 if( !checklist.visible ) {
                     continue;
                 }
 
-                GUILayout.BeginHorizontal( checklist.isSelected ? selectedStyle : unselectedStyle );
-                if( GUILayout.Button( checklist.name, GUI.skin.label ) ) {
-                    checklist.isSelected = !checklist.isSelected;
-                }
-                GUILayout.EndHorizontal();
+                DrawChecklist( checklist );
             }
-            GUILayout.EndScrollView();
 
+            GUILayout.EndScrollView();
+        }
+
+        private void DrawChecklist( Checklist checklist ) {
+            GUILayout.BeginHorizontal( checklist.isSelected ? selectedStyle : unselectedStyle );
+
+            if( GUILayout.Button( checklist.name, GUI.skin.label ) ) {
+                checklist.isSelected = !checklist.isSelected;
+            }
+
+            GUILayout.EndHorizontal();
+        }
+
+        private void DrawHideButton() {
             GUILayout.BeginHorizontal();
+
             if( GUILayout.Button( "Hide" ) ) {
                 SetVisible( false );
             }
+
             GUILayout.EndHorizontal();
         }
 
