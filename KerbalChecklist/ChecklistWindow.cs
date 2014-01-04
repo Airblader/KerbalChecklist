@@ -26,7 +26,7 @@ namespace KerbalChecklist {
             : base( "KerbalChecklist", DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT ) {
 
             this.checklists = checklists;
-            this.selectedChecklists = checklists.checklists;
+            this.selectedChecklists = new List<Checklist>();
 
             this.selectionWindow = new SelectionWindow( checklists, OnSelected );
         }
