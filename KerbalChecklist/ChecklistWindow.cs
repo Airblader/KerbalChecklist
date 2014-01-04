@@ -39,56 +39,78 @@ namespace KerbalChecklist {
             return numberOfCheckedItems;
         }
 
-        // TODO refactor this
         protected override void DrawWindowContents( int windowID ) {
-            checklistItemsScrollPosition = GUILayout.BeginScrollView( checklistItemsScrollPosition );
+            DrawChecklists();
+            DrawTooltipDisplay();
+            DrawSettings();
+            DrawSelectChecklistsButton();
+        }
 
+        private void DrawChecklists() {
+            checklistItemsScrollPosition = GUILayout.BeginScrollView( checklistItemsScrollPosition );
             foreach( Checklist checklist in checklists.checklists ) {
                 if( !checklist.isSelected ) {
                     continue;
                 }
 
-                int numberOfCheckedItems = getNumberOfCheckedItems( checklist );
-                int numberOfItems = checklist.GetItemsRecursively( checklists ).Count;
-
-                GUILayout.BeginHorizontal( numberOfCheckedItems == numberOfItems
-                    ? checklistSectionDoneHeaderBackgroundStyle : checklistSectionHeaderBackgroundStyle );
-                string label = checklist.isCollapsed ? "▶ " : "▼ ";
-                label += checklist.name;
-                label += " (" + numberOfCheckedItems + "/" + numberOfItems + ")";
-                if( GUILayout.Button( label, checklistSectionHeaderLabelStyle, GUILayout.ExpandWidth( true ) ) ) {
-                    checklist.isCollapsed = !checklist.isCollapsed;
-                }
-                if( GUILayout.Button( new GUIContent( "X", "Remove this checklist" ), GUILayout.ExpandWidth( false ) ) ) {
-                    checklist.isSelected = false;
-                }
-                GUILayout.EndHorizontal();
-
-                // TODO have this wrap the foreach loop
-                if( checklist.isCollapsed ) {
-                    continue;
-                }
-                foreach( Item item in checklist.GetItemsRecursively( checklists ) ) {
-                    if( item.isChecked && !displayCheckedItems ) {
-                        continue;
-                    }
-
-                    GUILayout.BeginHorizontal();
-                    item.isChecked = GUILayout.Toggle( item.isChecked, new GUIContent( item.name, item.description ),
-                        checklistToggleStyle );
-                    GUILayout.EndHorizontal();
-                }
+                DrawChecklistHeader( checklist );
+                DrawItems( checklist );
             }
             GUILayout.EndScrollView();
+        }
 
+        private void DrawChecklistHeader( Checklist checklist ) {
+            int numberOfCheckedItems = getNumberOfCheckedItems( checklist );
+            int numberOfItems = checklist.GetItemsRecursively( checklists ).Count;
+
+            GUILayout.BeginHorizontal( numberOfCheckedItems == numberOfItems
+                ? checklistSectionDoneHeaderBackgroundStyle : checklistSectionHeaderBackgroundStyle );
+            string label = checklist.isCollapsed ? "▶ " : "▼ ";
+            label += checklist.name;
+            label += " (" + numberOfCheckedItems + "/" + numberOfItems + ")";
+            if( GUILayout.Button( label, checklistSectionHeaderLabelStyle, GUILayout.ExpandWidth( true ) ) ) {
+                checklist.isCollapsed = !checklist.isCollapsed;
+            }
+            if( GUILayout.Button( new GUIContent( "X", "Remove this checklist" ), GUILayout.ExpandWidth( false ) ) ) {
+                checklist.isSelected = false;
+            }
+            GUILayout.EndHorizontal();
+        }
+
+        private void DrawItems( Checklist checklist ) {
+            if( checklist.isCollapsed ) {
+                return;
+            }
+
+            foreach( Item item in checklist.GetItemsRecursively( checklists ) ) {
+                if( item.isChecked && !displayCheckedItems ) {
+                    continue;
+                }
+
+                DrawItem( item );
+            }
+        }
+
+        private void DrawItem( Item item ) {
+            GUILayout.BeginHorizontal();
+            item.isChecked = GUILayout.Toggle( item.isChecked, new GUIContent( item.name, item.description ),
+                checklistToggleStyle );
+            GUILayout.EndHorizontal();
+        }
+
+        private void DrawTooltipDisplay() {
             GUILayout.BeginHorizontal();
             GUILayout.Label( "Description: " + ( String.IsNullOrEmpty( GUI.tooltip ) ? "Hover over an item" : GUI.tooltip ) );
             GUILayout.EndHorizontal();
+        }
 
+        private void DrawSettings() {
             GUILayout.BeginHorizontal();
             displayCheckedItems = GUILayout.Toggle( displayCheckedItems, "Display checked items" );
             GUILayout.EndHorizontal();
+        }
 
+        private void DrawSelectChecklistsButton() {
             GUILayout.BeginHorizontal();
             if( GUILayout.Button( "Select Checklists" ) ) {
                 selectionWindow.SetVisible( true );
