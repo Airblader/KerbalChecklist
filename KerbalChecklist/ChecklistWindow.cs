@@ -53,14 +53,21 @@ namespace KerbalChecklist {
 
                 GUILayout.BeginHorizontal( numberOfCheckedItems == numberOfItems
                     ? checklistSectionDoneHeaderBackgroundStyle : checklistSectionHeaderBackgroundStyle );
-                string label = checklist.name + " (" + numberOfCheckedItems + "/"
+                string label = checklist.isCollapsed ? "▶ " : "";
+                label += checklist.name + " (" + numberOfCheckedItems + "/"
                     + numberOfItems + ")";
-                GUILayout.Label( label, checklistSectionHeaderLabelStyle, GUILayout.ExpandWidth( true ) );
+                if( GUILayout.Button( label, checklistSectionHeaderLabelStyle, GUILayout.ExpandWidth( true ) ) ) {
+                    checklist.isCollapsed = !checklist.isCollapsed;
+                }
                 if( GUILayout.Button( new GUIContent( "X", "Remove this checklist" ), GUILayout.ExpandWidth( false ) ) ) {
                     checklist.isSelected = false;
                 }
                 GUILayout.EndHorizontal();
 
+                // TODO have this wrap the foreach loop
+                if( checklist.isCollapsed ) {
+                    continue;
+                }
                 foreach( Item item in checklist.GetItemsRecursively( checklists ) ) {
                     if( item.isChecked && !displayCheckedItems ) {
                         continue;

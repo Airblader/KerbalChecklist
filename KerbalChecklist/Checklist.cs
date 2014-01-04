@@ -75,6 +75,8 @@ namespace KerbalChecklist {
         public bool visible;
         [XmlIgnore()]
         public bool isSelected = false;
+        [XmlIgnore()]
+        public bool isCollapsed = false;
 
         public List<string> checklists = new List<string>();
         public List<Item> items = new List<Item>();
