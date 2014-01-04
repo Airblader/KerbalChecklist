@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using KSP.IO;
 using UnityEngine;
 using Tac;
@@ -17,6 +18,8 @@ namespace KerbalChecklist {
         private ButtonWrapper toolbarButton;
 
         void Awake() {
+            Log.Debug( "Waking up..." );
+
             checklists = Checklists.Load( CHECKLISTS_FILE );
             checklistWindow = new ChecklistWindow( checklists );
 
@@ -24,13 +27,19 @@ namespace KerbalChecklist {
         }
 
         void Start() {
+            Log.Debug( "Starting..." );
+
             Load();
             checklistWindow.SetVisible( true );
         }
 
         private void SetupToolbar() {
-            toolbarButton = new ButtonWrapper( new Rect( Screen.width * 0.7f, 0, 32, 32 ),
-                "KerbalChecklist/kerbalchecklist", "KC", "Kerbal Checklist", checklistWindow.ToggleVisible );
+            try {
+                toolbarButton = new ButtonWrapper( new Rect( Screen.width * 0.7f, 0, 32, 32 ),
+                    "KerbalChecklist/kerbalchecklist", "KC", "Kerbal Checklist", checklistWindow.ToggleVisible );
+            } catch( Exception e ) {
+                Log.Error( "Failed to instantiate toolbar button", e );
+            }
         }
 
         internal void OnDestroy() {
@@ -38,6 +47,7 @@ namespace KerbalChecklist {
         }
 
         private void Load() {
+            Log.Debug( "Loading configuration..." );
             if( File.Exists<KerbalChecklist>( CONFIG_FILE ) ) {
                 ConfigNode config = ConfigNode.Load( CONFIG_FILE );
 
@@ -47,6 +57,7 @@ namespace KerbalChecklist {
         }
 
         private void Save() {
+            Log.Debug( "Saving configuration..." );
             ConfigNode config = new ConfigNode();
 
             checklistWindow.Save( config );
