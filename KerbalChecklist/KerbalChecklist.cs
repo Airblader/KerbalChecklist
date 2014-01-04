@@ -12,7 +12,7 @@ namespace KerbalChecklist {
         private const string CHECKLISTS_FILE = "checklists.xml";
         private const string CONFIG_FILE = "KerbalChecklist.cfg";
 
-        private Checklists checklists; // TODO rename this
+        private Checklists checklists;
         private ChecklistWindow checklistWindow;
 
         private ButtonWrapper toolbarButton;
@@ -43,6 +43,7 @@ namespace KerbalChecklist {
         }
 
         internal void OnDestroy() {
+            Save();
             toolbarButton.Destroy();
         }
 
