@@ -84,6 +84,8 @@ namespace KerbalChecklist {
         [XmlIgnore()]
         public bool isCollapsed = false;
 
+        [XmlArray()]
+        [XmlArrayItem( "checklist" )]
         public List<string> checklists = new List<string>();
         public List<Item> items = new List<Item>();
 
