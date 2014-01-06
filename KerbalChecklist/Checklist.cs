@@ -56,6 +56,9 @@ namespace KerbalChecklist {
                 listNames.Add( list.name );
             }
 
+            // TODO
+            // 1. List does not contain itself
+
             Log.Debug( "Successfully validated loaded checklists." );
             return true;
         }
@@ -109,14 +112,15 @@ namespace KerbalChecklist {
             return this;
         }
 
+        // TODO this should be a method of Checklists
         public List<Item> GetItemsRecursively( Checklists parent ) {
-            List<Item> allItems = items;
+            List<Item> allItems = new List<Item>( items );
             foreach( string listName in checklists ) {
                 Checklist list = parent.GetChecklistByName( listName );
                 allItems.AddRange( list.GetItemsRecursively( parent ) );
             }
 
-            return items;
+            return allItems;
         }
 
     }
