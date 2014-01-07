@@ -48,6 +48,7 @@ namespace KerbalChecklist {
         }
 
         private void DrawChecklists() {
+            // TODO this is going to be a problem
             GUILayout.BeginScrollView( Vector2.zero );
 
             foreach( Checklist checklist in checklists ) {
@@ -66,6 +67,8 @@ namespace KerbalChecklist {
 
             if( GUILayout.Button( checklist.name, GUI.skin.label ) ) {
                 checklist.isSelected = !checklist.isSelected;
+
+                // TODO unselect all items if list was deselected?
             }
 
             GUILayout.EndHorizontal();

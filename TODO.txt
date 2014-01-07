@@ -1,6 +1,7 @@
 TODO:
 - save state of marked checkboxes with current vessel in editor, but not otherwise(!)
 
+- checklist type VAB/SPH/both
 - use XML version to auto-update document if needed
 - triggers to include certain checklists
 - automatically pre-check list items
