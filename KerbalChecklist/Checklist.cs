@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
+using KerbalChecklist.Extensions;
 
 namespace KerbalChecklist {
 
@@ -84,8 +85,8 @@ namespace KerbalChecklist {
                     continue;
                 }
 
-                list.isSelected = listNode.GetValue( StateKeys.IS_SELECTED ) == "True";
-                list.isCollapsed = listNode.GetValue( StateKeys.IS_COLLAPSED ) == "True";
+                list.isSelected = listNode.GetBooleanValue( StateKeys.IS_SELECTED );
+                list.isCollapsed = listNode.GetBooleanValue( StateKeys.IS_COLLAPSED );
 
                 foreach( ConfigNode itemNode in listNode.GetNodes( StateKeys.ITEM ) ) {
                     Item item = list.GetItemByName( itemNode.GetValue( StateKeys.ITEM_NAME ) );
@@ -93,7 +94,7 @@ namespace KerbalChecklist {
                         continue;
                     }
 
-                    item.isChecked = itemNode.GetValue( StateKeys.IS_CHECKED ) == "True";
+                    item.isChecked = itemNode.GetBooleanValue( StateKeys.IS_CHECKED );
                 }
             }
 
