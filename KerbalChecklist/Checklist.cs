@@ -123,6 +123,16 @@ namespace KerbalChecklist {
             return allItems;
         }
 
+        public Item GetItemByName( string name ) {
+            foreach( Item item in items ) {
+                if( item.name == name ) {
+                    return item;
+                }
+            }
+
+            return null;
+        }
+
     }
 
     [XmlType( "item" )]
