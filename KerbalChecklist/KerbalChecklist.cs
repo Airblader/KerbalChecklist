@@ -10,7 +10,7 @@ namespace KerbalChecklist {
     public class KerbalChecklist : MonoBehaviour {
 
         private const string CHECKLISTS_FILE = "checklists.xml";
-        private string configFile;
+        public static string configFile;
 
         private Checklists checklists;
         private ChecklistWindow checklistWindow;
