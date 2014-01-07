@@ -33,6 +33,26 @@ namespace KerbalChecklist {
             }
         }
 
+        internal class StateKeys {
+
+            public const string CRAFT = "CRAFT";
+            public const string LIST = "LIST";
+            public const string ITEM = "ITEM";
+
+            public const string CRAFT_NAME = "vesselName";
+            public const string LIST_NAME = "listName";
+            public const string ITEM_NAME = "itemName";
+
+            public const string LAST_UPDATE = "lastUpdate";
+            public const string IS_SELECTED = "isSelected";
+            public const string IS_COLLAPSED = "isCollapsed";
+            public const string IS_CHECKED = "isChecked";
+
+            private StateKeys() {
+            }
+
+        }
+
         public void LoadState() {
             string craftName = EditorLogic.fetch.shipNameField.Text;
             ConfigNode config = ConfigNode.Load( KerbalChecklist.craftStatesFile );
@@ -41,8 +61,8 @@ namespace KerbalChecklist {
             }
 
             ConfigNode craftNode = null;
-            foreach( ConfigNode node in config.GetNodes( "CRAFT" ) ) {
-                if( node.GetValue( "name" ) == craftName ) {
+            foreach( ConfigNode node in config.GetNodes( StateKeys.CRAFT ) ) {
+                if( node.GetValue( StateKeys.CRAFT_NAME ) == craftName ) {
                     craftNode = node;
                     break;
                 }
@@ -53,22 +73,22 @@ namespace KerbalChecklist {
                 return;
             }
 
-            foreach( ConfigNode listNode in craftNode.GetNodes( "LIST" ) ) {
-                Checklist list = GetChecklistByName( listNode.GetValue( "listName" ) );
+            foreach( ConfigNode listNode in craftNode.GetNodes( StateKeys.LIST ) ) {
+                Checklist list = GetChecklistByName( listNode.GetValue( StateKeys.LIST_NAME ) );
                 if( list == null ) {
                     continue;
                 }
 
-                list.isSelected = listNode.GetValue( "isSelected" ) == "true";
-                list.isCollapsed = listNode.GetValue( "isCollapsed" ) == "true";
+                list.isSelected = listNode.GetValue( StateKeys.IS_SELECTED ) == "true";
+                list.isCollapsed = listNode.GetValue( StateKeys.IS_COLLAPSED ) == "true";
 
-                foreach( ConfigNode itemNode in listNode.GetNodes( "ITEM" ) ) {
-                    Item item = list.GetItemByName( itemNode.GetValue( "name" ) );
+                foreach( ConfigNode itemNode in listNode.GetNodes( StateKeys.ITEM ) ) {
+                    Item item = list.GetItemByName( itemNode.GetValue( StateKeys.ITEM_NAME ) );
                     if( item == null ) {
                         continue;
                     }
 
-                    item.isChecked = itemNode.GetValue( "isChecked" ) == "true";
+                    item.isChecked = itemNode.GetValue( StateKeys.IS_CHECKED ) == "true";
                 }
             }
         }
@@ -77,21 +97,21 @@ namespace KerbalChecklist {
             string craftName = EditorLogic.fetch.shipNameField.Text;
             Log.Debug( "Saving state for craft = " + craftName );
 
-            ConfigNode craftNode = new ConfigNode( "CRAFT" );
-            craftNode.AddValue( "vesselName", craftName );
-            craftNode.AddValue( "lastUpdate", DateTime.Today.ToString( "d" ) );
+            ConfigNode craftNode = new ConfigNode( StateKeys.CRAFT );
+            craftNode.AddValue( StateKeys.CRAFT_NAME, craftName );
+            craftNode.AddValue( StateKeys.LAST_UPDATE, DateTime.Today.ToString( "d" ) );
 
             foreach( Checklist list in checklists ) {
-                ConfigNode listNode = craftNode.AddNode( new ConfigNode( "LIST" ) );
-                listNode.AddValue( "listName", list.name );
+                ConfigNode listNode = craftNode.AddNode( new ConfigNode( StateKeys.LIST ) );
+                listNode.AddValue( StateKeys.LIST_NAME, list.name );
 
-                listNode.AddValue( "isSelected", list.isSelected );
-                listNode.AddValue( "isCollapsed", list.isCollapsed );
+                listNode.AddValue( StateKeys.IS_SELECTED, list.isSelected );
+                listNode.AddValue( StateKeys.IS_COLLAPSED, list.isCollapsed );
 
                 foreach( Item item in list.items ) {
-                    ConfigNode itemNode = listNode.AddNode( new ConfigNode( "ITEM" ) );
-                    itemNode.AddValue( "name", item.name );
-                    itemNode.AddValue( "isChecked", item.isChecked );
+                    ConfigNode itemNode = listNode.AddNode( new ConfigNode( StateKeys.ITEM ) );
+                    itemNode.AddValue( StateKeys.ITEM_NAME, item.name );
+                    itemNode.AddValue( StateKeys.IS_CHECKED, item.isChecked );
                 }
             }
 
@@ -103,8 +123,8 @@ namespace KerbalChecklist {
                 config = ConfigNode.Load( KerbalChecklist.craftStatesFile );
 
                 // TODO do this in an extension method
-                foreach( ConfigNode node in config.GetNodes( "CRAFT" ) ) {
-                    if( node.GetValue( "vesselName" ) == craftName ) {
+                foreach( ConfigNode node in config.GetNodes( StateKeys.CRAFT ) ) {
+                    if( node.GetValue( StateKeys.CRAFT_NAME ) == craftName ) {
                         Log.Debug( "Saved state for this craft already exists, removing it" );
                         config.nodes.Remove( node );
                     }
