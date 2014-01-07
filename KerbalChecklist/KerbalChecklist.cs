@@ -15,8 +15,8 @@ namespace KerbalChecklist {
 
         private Checklists checklists;
         private ChecklistWindow checklistWindow;
-
         private ButtonWrapper toolbarButton;
+        private Part rootPart;
 
         void Awake() {
             Log.Debug( "Waking up..." );
@@ -34,6 +34,18 @@ namespace KerbalChecklist {
 
             Load();
             checklistWindow.SetVisible( true );
+
+            EditorController.Activate();
+        }
+
+        void FixedUpdate() {
+            if( rootPart != EditorController.fetch.rootPart ) {
+                rootPart = EditorController.fetch.rootPart;
+
+                if( rootPart != null ) {
+                    checklists.LoadState();
+                }
+            }
         }
 
         private void SetupToolbar() {
