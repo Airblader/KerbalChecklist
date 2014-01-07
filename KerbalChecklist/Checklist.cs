@@ -95,13 +95,22 @@ namespace KerbalChecklist {
                 }
             }
 
-            ConfigNode config = ConfigNode.Load( KerbalChecklist.craftStatesFile );
+            ConfigNode config = null;
+            // TODO get rid of entire namespace when XML stuff is gone
+            if( !KSP.IO.File.Exists<KerbalChecklist>( KerbalChecklist.craftStatesFile ) ) {
+                config = new ConfigNode();
+            } else {
+                config = ConfigNode.Load( KerbalChecklist.craftStatesFile );
 
-            // TODO do this in an extension method
-            foreach( ConfigNode node in config.GetNodes( "CRAFT" ) ) {
-                if( node.GetValue( "name" ) == craftName ) {
-                    Log.Debug( "Saved state for this craft already exists, removing it" );
-                    config.nodes.Remove( node );
+                // TODO do this in an extension method
+                foreach( ConfigNode node in config.GetNodes( "CRAFT" ) ) {
+                    // TODO just for debugging
+                    Log.Debug( "Inspecting node = " + node.GetValue( "name" ) ?? "<none>" );
+
+                    if( node.GetValue( "name" ) == craftName ) {
+                        Log.Debug( "Saved state for this craft already exists, removing it" );
+                        config.nodes.Remove( node );
+                    }
                 }
             }
 
