@@ -49,6 +49,7 @@ namespace KerbalChecklist {
             public const string IS_CHECKED = "isChecked";
 
             private StateKeys() {
+                // prevent instantiation
             }
 
         }
