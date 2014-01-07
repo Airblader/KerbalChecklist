@@ -21,7 +21,7 @@ namespace KerbalChecklist {
             Log.Debug( "Waking up..." );
             configFile = IOUtils.GetFilePathFor( this.GetType(), "KerbalChecklist.cfg" );
 
-            checklists = Checklists.Load( CHECKLISTS_FILE );
+            checklists = Checklists.LoadMaster( CHECKLISTS_FILE );
             checklistWindow = new ChecklistWindow( checklists );
 
             SetupToolbar();
