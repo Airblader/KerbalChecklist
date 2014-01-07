@@ -6,11 +6,11 @@
       <checklists />
       <items>
         <item>
-          <name>Some Item</name>
+          <name>First List Item 1</name>
           <description>Foobar</description>
         </item>
         <item>
-          <name>Another Item</name>
+          <name>First List Item 2</name>
           <description>Baz</description>
         </item>
       </items>
@@ -19,12 +19,32 @@
       <checklists />
       <items>
         <item>
-          <name>Foo</name>
+          <name>Second List Item 1</name>
           <description>Foobar</description>
         </item>
         <item>
-          <name>Bar</name>
+          <name>Second List Item 2</name>
           <description>Baz</description>
+        </item>
+      </items>
+    </checklist>
+    <checklist name="Checklist With Mix-In" visible="true">
+      <checklists>
+          <checklist>Invisible Checklist</checklist>
+      </checklists>
+      <items>
+        <item>
+          <name>Normal Item</name>
+          <description></description>
+        </item>
+      </items>
+    </checklist>
+    <checklist name="Invisible Checklist" visible="false">
+      <checklists />
+      <items>
+        <item>
+          <name>Invisible Item</name>
+          <description></description>
         </item>
       </items>
     </checklist>
