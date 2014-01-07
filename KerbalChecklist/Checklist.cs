@@ -104,10 +104,7 @@ namespace KerbalChecklist {
 
                 // TODO do this in an extension method
                 foreach( ConfigNode node in config.GetNodes( "CRAFT" ) ) {
-                    // TODO just for debugging
-                    Log.Debug( "Inspecting node = " + node.GetValue( "name" ) ?? "<none>" );
-
-                    if( node.GetValue( "name" ) == craftName ) {
+                    if( node.GetValue( "vesselName" ) == craftName ) {
                         Log.Debug( "Saved state for this craft already exists, removing it" );
                         config.nodes.Remove( node );
                     }

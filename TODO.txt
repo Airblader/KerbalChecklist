@@ -1,5 +1,6 @@
 TODO:
-- save state of marked checkboxes with current vessel in editor, but not otherwise(!)
+- clean up crafts with lastUpdate
+- Bug: prevent click on a window to go through to background
 
 - checklist type VAB/SPH/both
 - use XML version to auto-update document if needed
