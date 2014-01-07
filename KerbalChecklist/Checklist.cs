@@ -19,19 +19,6 @@ namespace KerbalChecklist {
             return this;
         }
 
-        public void Save( string filename ) {
-            string fullFilename = KSP.IO.IOUtils.GetFilePathFor( typeof( KerbalChecklist ), filename );
-
-            XmlSerializer serializer = new XmlSerializer( typeof( Checklists ) );
-            TextWriter streamWriter = new StreamWriter( fullFilename );
-
-            try {
-                serializer.Serialize( streamWriter, this );
-            } finally {
-                streamWriter.Close();
-            }
-        }
-
         public static Checklists Load( string filename ) {
             string fullFilename = KSP.IO.IOUtils.GetFilePathFor( typeof( KerbalChecklist ), filename );
 
