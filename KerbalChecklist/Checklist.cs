@@ -56,11 +56,15 @@ namespace KerbalChecklist {
 
         public void LoadState() {
             string craftName = EditorLogic.fetch.shipNameField.Text;
-            ConfigNode config = ConfigNode.Load( KerbalChecklist.craftStatesFile );
-            if( config == null ) {
+            Log.Debug( "Loading state for craft = " + craftName );
+
+            // TODO return full namespace reference
+            if( !KSP.IO.File.Exists<KerbalChecklist>( KerbalChecklist.craftStatesFile ) ) {
+                Log.Debug( "No file with saved craft information found, cannot load saved state" );
                 return;
             }
 
+            ConfigNode config = ConfigNode.Load( KerbalChecklist.craftStatesFile );
             ConfigNode craftNode = null;
             foreach( ConfigNode node in config.GetNodes( StateKeys.CRAFT ) ) {
                 if( node.GetValue( StateKeys.CRAFT_NAME ) == craftName ) {
@@ -70,7 +74,7 @@ namespace KerbalChecklist {
             }
 
             if( craftNode == null ) {
-                // no saved state found
+                Log.Debug( "Found no saved state for this craft" );
                 return;
             }
 
@@ -80,8 +84,8 @@ namespace KerbalChecklist {
                     continue;
                 }
 
-                list.isSelected = listNode.GetValue( StateKeys.IS_SELECTED ) == "true";
-                list.isCollapsed = listNode.GetValue( StateKeys.IS_COLLAPSED ) == "true";
+                list.isSelected = listNode.GetValue( StateKeys.IS_SELECTED ) == "True";
+                list.isCollapsed = listNode.GetValue( StateKeys.IS_COLLAPSED ) == "True";
 
                 foreach( ConfigNode itemNode in listNode.GetNodes( StateKeys.ITEM ) ) {
                     Item item = list.GetItemByName( itemNode.GetValue( StateKeys.ITEM_NAME ) );
@@ -89,9 +93,11 @@ namespace KerbalChecklist {
                         continue;
                     }
 
-                    item.isChecked = itemNode.GetValue( StateKeys.IS_CHECKED ) == "true";
+                    item.isChecked = itemNode.GetValue( StateKeys.IS_CHECKED ) == "True";
                 }
             }
+
+            Log.Debug( "Successfully loaded saved state" );
         }
 
         public void SaveState() {

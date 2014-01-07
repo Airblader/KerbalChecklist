@@ -1,4 +1,5 @@
 TODO:
+- hide checklist plugin when no saved state found
 - clean up crafts with lastUpdate
 - Bug: prevent click on a window to go through to background
 - use additional hash to deal with different crafts of same name (sanity check)
