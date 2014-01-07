@@ -10,7 +10,8 @@ namespace KerbalChecklist {
     public class KerbalChecklist : MonoBehaviour {
 
         private const string CHECKLISTS_FILE = "checklists.xml";
-        public static string configFile;
+        public static string windowSettingsFile;
+        public static string craftStatesFile;
 
         private Checklists checklists;
         private ChecklistWindow checklistWindow;
@@ -19,7 +20,8 @@ namespace KerbalChecklist {
 
         void Awake() {
             Log.Debug( "Waking up..." );
-            configFile = IOUtils.GetFilePathFor( this.GetType(), "KerbalChecklist.cfg" );
+            windowSettingsFile = IOUtils.GetFilePathFor( this.GetType(), "WindowSettings.cfg" );
+            craftStatesFile = IOUtils.GetFilePathFor( this.GetType(), "CraftSettings.cfg" );
 
             checklists = Checklists.LoadMaster( CHECKLISTS_FILE );
             checklistWindow = new ChecklistWindow( checklists );
@@ -50,8 +52,8 @@ namespace KerbalChecklist {
 
         private void Load() {
             Log.Debug( "Loading configuration..." );
-            if( File.Exists<KerbalChecklist>( configFile ) ) {
-                ConfigNode config = ConfigNode.Load( configFile );
+            if( File.Exists<KerbalChecklist>( windowSettingsFile ) ) {
+                ConfigNode config = ConfigNode.Load( windowSettingsFile );
 
                 checklistWindow.Load( config );
                 toolbarButton.Load( config );
@@ -60,12 +62,13 @@ namespace KerbalChecklist {
 
         private void Save() {
             Log.Debug( "Saving configuration..." );
-            ConfigNode config = new ConfigNode();
 
+            checklists.SaveState();
+
+            ConfigNode config = new ConfigNode();
             checklistWindow.Save( config );
             toolbarButton.Save( config );
-
-            config.Save( configFile );
+            config.Save( windowSettingsFile );
         }
 
     }

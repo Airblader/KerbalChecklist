@@ -20,6 +20,7 @@ namespace KerbalChecklist {
         }
 
         public static Checklists LoadMaster( string filename ) {
+            // TODO do this with ConfigNode?
             string fullFilename = KSP.IO.IOUtils.GetFilePathFor( typeof( KerbalChecklist ), filename );
 
             XmlSerializer serializer = new XmlSerializer( typeof( Checklists ) );
@@ -34,7 +35,7 @@ namespace KerbalChecklist {
 
         public void LoadState() {
             string craftName = EditorLogic.fetch.shipNameField.Text;
-            ConfigNode config = ConfigNode.Load( KerbalChecklist.configFile );
+            ConfigNode config = ConfigNode.Load( KerbalChecklist.craftStatesFile );
             if( config == null ) {
                 return;
             }
@@ -74,6 +75,7 @@ namespace KerbalChecklist {
 
         public void SaveState() {
             string craftName = EditorLogic.fetch.shipNameField.Text;
+            Log.Debug( "Saving state for craft = " + craftName );
 
             ConfigNode craftNode = new ConfigNode( "CRAFT" );
             craftNode.AddValue( "vesselName", craftName );
@@ -93,17 +95,19 @@ namespace KerbalChecklist {
                 }
             }
 
-            ConfigNode config = ConfigNode.Load( KerbalChecklist.configFile );
+            ConfigNode config = ConfigNode.Load( KerbalChecklist.craftStatesFile );
 
             // TODO do this in an extension method
             foreach( ConfigNode node in config.GetNodes( "CRAFT" ) ) {
                 if( node.GetValue( "name" ) == craftName ) {
+                    Log.Debug( "Saved state for this craft already exists, removing it" );
                     config.nodes.Remove( node );
                 }
             }
 
             config.AddNode( craftNode );
-            config.Save( KerbalChecklist.configFile );
+            config.Save( KerbalChecklist.craftStatesFile );
+            Log.Debug( "Successfully saved state for this craft" );
         }
 
         public bool Validate() {
