@@ -85,6 +85,11 @@ namespace KerbalChecklist {
             string craftName = EditorLogic.fetch.shipNameField.Text;
             Log.Debug( "Saving state for craft = " + craftName );
 
+            if( craftName == "Untitled Space Craft" ) {
+                Log.Debug( "Will not save state for untitled space craft" );
+                return;
+            }
+
             if( !HasSelectedChecklists() ) {
                 Log.Debug( "Nothing to save as no checklists were selected" );
                 return;
