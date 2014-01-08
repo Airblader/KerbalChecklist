@@ -36,14 +36,19 @@ namespace KerbalChecklist {
             displayCheckedItems = newValue;
         }
 
+        // TODO maybe put this into Checklists to the other related methods
         private void DeleteSavedState() {
             if( !File.Exists<KerbalChecklist>( KerbalChecklist.craftStatesFile ) ) {
                 return;
             }
 
+            // remove saved state
             ConfigNode config = ConfigNode.Load( KerbalChecklist.craftStatesFile );
             config.RemoveNodesWithValue( StateKeys.CRAFT, StateKeys.CRAFT_NAME, EditorLogic.fetch.shipNameField.Text );
             config.Save( KerbalChecklist.craftStatesFile );
+
+            // reload state for current display
+            checklists.LoadState();
         }
 
         private int GetNumberOfCheckedItems( Checklist checklist ) {
