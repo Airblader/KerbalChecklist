@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 using Tac;
+using KerbalChecklist.Extensions;
+using KSP.IO;
 
 namespace KerbalChecklist {
 
@@ -36,7 +37,13 @@ namespace KerbalChecklist {
         }
 
         private void DeleteSavedState() {
-            // TODO
+            if( !File.Exists<KerbalChecklist>( KerbalChecklist.craftStatesFile ) ) {
+                return;
+            }
+
+            ConfigNode config = ConfigNode.Load( KerbalChecklist.craftStatesFile );
+            config.RemoveNodesWithValue( StateKeys.CRAFT, StateKeys.CRAFT_NAME, EditorLogic.fetch.shipNameField.Text );
+            config.Save( KerbalChecklist.craftStatesFile );
         }
 
         private int GetNumberOfCheckedItems( Checklist checklist ) {
