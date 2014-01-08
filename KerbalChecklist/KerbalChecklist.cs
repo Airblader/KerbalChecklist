@@ -41,8 +41,6 @@ namespace KerbalChecklist {
             Log.Debug( "Starting..." );
 
             Load();
-            checklistWindow.SetVisible( true );
-
             EditorController.Activate();
         }
 
