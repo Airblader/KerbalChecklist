@@ -57,7 +57,7 @@ namespace KerbalChecklist {
             sortedShipList = new List<Part>();
             try {
                 sortedShipList = EditorLogic.SortedShipList;
-            } catch( NullReferenceException ignored ) {
+            } catch( NullReferenceException ) {
                 /* http://bugs.kerbalspaceprogram.com/issues/2021 */
             }
         }
