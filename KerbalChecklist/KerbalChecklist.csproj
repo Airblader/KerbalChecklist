@@ -71,11 +71,11 @@
   <ItemGroup>
     <Compile Include="ChecklistWindow.cs" />
     <Compile Include="Checklist.cs" />
-    <Compile Include="EditorController.cs" />
+    <Compile Include="Util\EditorController.cs" />
     <Compile Include="Extensions\ConfigNodeExtensions.cs" />
-    <Compile Include="GuiUtils.cs" />
+    <Compile Include="Util\GuiUtils.cs" />
     <Compile Include="KerbalChecklist.cs" />
-    <Compile Include="Log.cs" />
+    <Compile Include="Util\Log.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="External\TacLib\ButtonWrapper.cs" />
     <Compile Include="External\TacLib\Icon.cs" />
