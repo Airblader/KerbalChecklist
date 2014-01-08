@@ -80,6 +80,8 @@ namespace KerbalChecklist {
 
                 checklistWindow.Load( config );
                 toolbarButton.Load( config );
+            } else {
+                checklistWindow.SetVisible( true );
             }
         }
 
