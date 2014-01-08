@@ -104,13 +104,13 @@ namespace KerbalChecklist {
 
             ConfigNode config = null;
             // TODO get rid of entire namespace when XML stuff is gone
-            if( !KSP.IO.File.Exists<KerbalChecklist>( KerbalChecklist.craftStatesFile ) ) {
-                config = new ConfigNode();
-            } else {
+            if( KSP.IO.File.Exists<KerbalChecklist>( KerbalChecklist.craftStatesFile ) ) {
                 config = ConfigNode.Load( KerbalChecklist.craftStatesFile );
 
                 // remove any saved states that already exist
                 config.RemoveNodesWithValue( StateKeys.CRAFT, StateKeys.CRAFT_NAME, craftName );
+            } else {
+                config = new ConfigNode();
             }
 
             config.AddNode( craftNode );
