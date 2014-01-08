@@ -9,17 +9,25 @@ namespace KerbalChecklist {
     [KSPAddon( KSPAddon.Startup.EditorAny, false )]
     public class KerbalChecklist : MonoBehaviour {
 
+        // master file containing the checklist definitions
         private const string CHECKLISTS_FILE = "checklists.xml";
+
+        // contains settings for window position etc.
         public static string windowSettingsFile;
+
+        // contains the saved states of each craft
         public static string craftStatesFile;
 
         private Checklists checklists;
         private ChecklistWindow checklistWindow;
         private ButtonWrapper toolbarButton;
+
+        // keep track of the root part so we know when to reload the current saved state
         private Part rootPart;
 
         void Awake() {
             Log.Debug( "Waking up..." );
+
             windowSettingsFile = IOUtils.GetFilePathFor( this.GetType(), "WindowSettings.cfg" );
             craftStatesFile = IOUtils.GetFilePathFor( this.GetType(), "CraftSettings.cfg" );
 
@@ -39,6 +47,7 @@ namespace KerbalChecklist {
         }
 
         void FixedUpdate() {
+            // when the root part changes, we reload the saved state
             if( rootPart != EditorController.fetch.rootPart ) {
                 rootPart = EditorController.fetch.rootPart;
 
@@ -64,6 +73,7 @@ namespace KerbalChecklist {
 
         private void Load() {
             Log.Debug( "Loading configuration..." );
+
             if( File.Exists<KerbalChecklist>( windowSettingsFile ) ) {
                 ConfigNode config = ConfigNode.Load( windowSettingsFile );
 
