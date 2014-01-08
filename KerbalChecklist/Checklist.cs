@@ -34,27 +34,6 @@ namespace KerbalChecklist {
             }
         }
 
-        internal class StateKeys {
-
-            public const string CRAFT = "CRAFT";
-            public const string LIST = "LIST";
-            public const string ITEM = "ITEM";
-
-            public const string CRAFT_NAME = "vesselName";
-            public const string LIST_NAME = "listName";
-            public const string ITEM_NAME = "itemName";
-
-            public const string LAST_UPDATE = "lastUpdate";
-            public const string IS_SELECTED = "isSelected";
-            public const string IS_COLLAPSED = "isCollapsed";
-            public const string IS_CHECKED = "isChecked";
-
-            private StateKeys() {
-                // prevent instantiation
-            }
-
-        }
-
         public void LoadState() {
             string craftName = EditorLogic.fetch.shipNameField.Text;
             Log.Debug( "Loading state for craft = " + craftName );
@@ -246,6 +225,27 @@ namespace KerbalChecklist {
         public Item( String name, String description ) {
             this.name = name;
             this.description = description;
+        }
+
+    }
+
+    internal class StateKeys {
+
+        public const string CRAFT = "CRAFT";
+        public const string LIST = "LIST";
+        public const string ITEM = "ITEM";
+
+        public const string CRAFT_NAME = "vesselName";
+        public const string LIST_NAME = "listName";
+        public const string ITEM_NAME = "itemName";
+
+        public const string LAST_UPDATE = "lastUpdate";
+        public const string IS_SELECTED = "isSelected";
+        public const string IS_COLLAPSED = "isCollapsed";
+        public const string IS_CHECKED = "isChecked";
+
+        private StateKeys() {
+            // prevent instantiation
         }
 
     }
