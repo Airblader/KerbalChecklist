@@ -39,7 +39,7 @@ namespace KerbalChecklist {
             Log.Debug( "Loading state for craft = " + craftName );
 
             // TODO return full namespace reference
-            if( !KSP.IO.File.Exists<KerbalChecklist>( KerbalChecklist.craftStatesFile ) ) {
+            if( !FileExists( KerbalChecklist.craftStatesFile ) ) {
                 Log.Debug( "No file with saved craft information found, cannot load saved state" );
                 return false;
             }
@@ -90,7 +90,7 @@ namespace KerbalChecklist {
                 return;
             }
 
-            if( !HasSelectedChecklists() ) {
+            if( !HasSelectedChecklists() && !HasSavedState() ) {
                 Log.Debug( "Nothing to save as no checklists were selected" );
                 return;
             }
@@ -106,6 +106,8 @@ namespace KerbalChecklist {
                 listNode.AddValue( StateKeys.IS_SELECTED, list.isSelected );
                 listNode.AddValue( StateKeys.IS_COLLAPSED, list.isCollapsed );
 
+                // TODO only store checked items
+                // TODO ignore completely if list is not selected and not used in any other list
                 foreach( Item item in list.items ) {
                     ConfigNode itemNode = listNode.AddNode( new ConfigNode( StateKeys.ITEM ) );
                     itemNode.AddValue( StateKeys.ITEM_NAME, item.name );
@@ -114,8 +116,7 @@ namespace KerbalChecklist {
             }
 
             ConfigNode config = null;
-            // TODO get rid of entire namespace when XML stuff is gone
-            if( KSP.IO.File.Exists<KerbalChecklist>( KerbalChecklist.craftStatesFile ) ) {
+            if( FileExists( KerbalChecklist.craftStatesFile ) ) {
                 config = ConfigNode.Load( KerbalChecklist.craftStatesFile );
 
                 // remove any saved states that already exist
@@ -127,6 +128,20 @@ namespace KerbalChecklist {
             config.AddNode( craftNode );
             config.Save( KerbalChecklist.craftStatesFile );
             Log.Debug( "Successfully saved state for this craft" );
+        }
+
+        private bool FileExists( string filename ) {
+            // TODO remove namespace and inline when XML stuff is gone
+            return KSP.IO.File.Exists<KerbalChecklist>( filename );
+        }
+
+        private bool HasSavedState() {
+            if( !FileExists( KerbalChecklist.craftStatesFile ) ) {
+                return false;
+            }
+
+            ConfigNode config = ConfigNode.Load( KerbalChecklist.craftStatesFile );
+            return config.HasNodeWithValue( StateKeys.CRAFT, StateKeys.CRAFT_NAME, EditorLogic.fetch.shipNameField.Text );
         }
 
         public bool Validate() {
