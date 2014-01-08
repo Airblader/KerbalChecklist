@@ -52,7 +52,8 @@ namespace KerbalChecklist {
                 rootPart = EditorController.fetch.rootPart;
 
                 if( rootPart != null ) {
-                    checklists.LoadState();
+                    bool loadedSavedState = checklists.LoadState();
+                    checklistWindow.SetVisible( loadedSavedState );
                 }
             }
         }

@@ -34,14 +34,14 @@ namespace KerbalChecklist {
             }
         }
 
-        public void LoadState() {
+        public bool LoadState() {
             string craftName = EditorLogic.fetch.shipNameField.Text;
             Log.Debug( "Loading state for craft = " + craftName );
 
             // TODO return full namespace reference
             if( !KSP.IO.File.Exists<KerbalChecklist>( KerbalChecklist.craftStatesFile ) ) {
                 Log.Debug( "No file with saved craft information found, cannot load saved state" );
-                return;
+                return false;
             }
 
             ConfigNode config = ConfigNode.Load( KerbalChecklist.craftStatesFile );
@@ -55,7 +55,7 @@ namespace KerbalChecklist {
 
             if( craftNode == null ) {
                 Log.Debug( "Found no saved state for this craft" );
-                return;
+                return false;
             }
 
             foreach( ConfigNode listNode in craftNode.GetNodes( StateKeys.LIST ) ) {
@@ -78,6 +78,7 @@ namespace KerbalChecklist {
             }
 
             Log.Debug( "Successfully loaded saved state" );
+            return true;
         }
 
         public void SaveState() {
