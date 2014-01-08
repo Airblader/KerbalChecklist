@@ -72,6 +72,7 @@
     <Compile Include="ChecklistWindow.cs" />
     <Compile Include="Checklist.cs" />
     <Compile Include="EditorController.cs" />
+    <Compile Include="Extensions\ConfigNodeExtensions.cs" />
     <Compile Include="GuiUtils.cs" />
     <Compile Include="KerbalChecklist.cs" />
     <Compile Include="Log.cs" />

@@ -130,13 +130,8 @@ namespace KerbalChecklist {
             } else {
                 config = ConfigNode.Load( KerbalChecklist.craftStatesFile );
 
-                // TODO do this in an extension method
-                foreach( ConfigNode node in config.GetNodes( StateKeys.CRAFT ) ) {
-                    if( node.GetValue( StateKeys.CRAFT_NAME ) == craftName ) {
-                        Log.Debug( "Saved state for this craft already exists, removing it" );
-                        config.nodes.Remove( node );
-                    }
-                }
+                // remove any saved states that already exist
+                config.RemoveNodesWithValue( StateKeys.CRAFT, StateKeys.CRAFT_NAME, craftName );
             }
 
             config.AddNode( craftNode );
