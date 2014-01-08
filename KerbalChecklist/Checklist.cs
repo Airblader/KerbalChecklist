@@ -85,6 +85,11 @@ namespace KerbalChecklist {
             string craftName = EditorLogic.fetch.shipNameField.Text;
             Log.Debug( "Saving state for craft = " + craftName );
 
+            if( !HasSelectedChecklists() ) {
+                Log.Debug( "Nothing to save as no checklists were selected" );
+                return;
+            }
+
             ConfigNode craftNode = new ConfigNode( StateKeys.CRAFT );
             craftNode.AddValue( StateKeys.CRAFT_NAME, craftName );
             craftNode.AddValue( StateKeys.LAST_UPDATE, DateTime.Today.ToString( "d" ) );
@@ -156,6 +161,16 @@ namespace KerbalChecklist {
             }
 
             return allItems;
+        }
+
+        private bool HasSelectedChecklists() {
+            foreach( Checklist list in checklists ) {
+                if( list.isSelected ) {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
     }
