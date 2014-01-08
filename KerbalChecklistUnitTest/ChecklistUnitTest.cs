@@ -48,7 +48,7 @@ namespace KerbalChecklistUnitTest {
             checklists.AddChecklist( innerList );
             checklists.AddChecklist( outerList );
 
-            List<Item> allItems = outerList.GetItemsRecursively( checklists );
+            List<Item> allItems = checklists.GetItemsRecursively( outerList );
             Assert.AreEqual( 3, allItems.Count );
             Assert.AreEqual( "Outer List Item", allItems[0].name );
             Assert.AreEqual( "Inner List Item", allItems[1].name );

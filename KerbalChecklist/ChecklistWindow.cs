@@ -31,7 +31,7 @@ namespace KerbalChecklist {
 
         private int getNumberOfCheckedItems( Checklist checklist ) {
             int numberOfCheckedItems = 0;
-            foreach( Item item in checklist.GetItemsRecursively( checklists ) ) {
+            foreach( Item item in checklists.GetItemsRecursively( checklist ) ) {
                 if( item.isChecked ) {
                     numberOfCheckedItems++;
                 }
@@ -64,7 +64,7 @@ namespace KerbalChecklist {
 
         private void DrawChecklistHeader( Checklist checklist ) {
             int numberOfCheckedItems = getNumberOfCheckedItems( checklist );
-            int numberOfItems = checklist.GetItemsRecursively( checklists ).Count;
+            int numberOfItems = checklists.GetItemsRecursively( checklist ).Count;
 
             GUILayout.BeginHorizontal( numberOfCheckedItems == numberOfItems
                 ? checklistSectionDoneHeaderBackgroundStyle : checklistSectionHeaderBackgroundStyle );
@@ -91,7 +91,7 @@ namespace KerbalChecklist {
                 return;
             }
 
-            foreach( Item item in checklist.GetItemsRecursively( checklists ) ) {
+            foreach( Item item in checklists.GetItemsRecursively( checklist ) ) {
                 if( item.isChecked && !displayCheckedItems ) {
                     continue;
                 }

@@ -148,6 +148,15 @@ namespace KerbalChecklist {
             return null;
         }
 
+        public List<Item> GetItemsRecursively( Checklist checklist ) {
+            List<Item> allItems = new List<Item>( checklist.items );
+            foreach( string listName in checklist.checklists ) {
+                allItems.AddRange( GetItemsRecursively( GetChecklistByName( listName ) ) );
+            }
+
+            return allItems;
+        }
+
     }
 
     [XmlType( "checklist" )]
@@ -185,17 +194,6 @@ namespace KerbalChecklist {
         public Checklist AddChecklist( Checklist checklist ) {
             checklists.Add( checklist.name );
             return this;
-        }
-
-        // TODO this should be a method of Checklists
-        public List<Item> GetItemsRecursively( Checklists parent ) {
-            List<Item> allItems = new List<Item>( items );
-            foreach( string listName in checklists ) {
-                Checklist list = parent.GetChecklistByName( listName );
-                allItems.AddRange( list.GetItemsRecursively( parent ) );
-            }
-
-            return allItems;
         }
 
         public Item GetItemByName( string name ) {
