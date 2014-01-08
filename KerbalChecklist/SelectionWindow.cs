@@ -28,7 +28,7 @@ namespace KerbalChecklist {
             }
         }
 
-        protected override void DrawWindowContents( int windowID ) {
+        override protected void DrawWindowContents( int windowID ) {
             DrawSelectAllOrNoneButtons();
             DrawChecklists();
             DrawHideButton();
