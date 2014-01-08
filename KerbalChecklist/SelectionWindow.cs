@@ -8,6 +8,7 @@ namespace KerbalChecklist {
     class SelectionWindow : Window<KerbalChecklist> {
 
         private List<Checklist> checklists;
+        private Vector2 scrollPosition = Vector2.zero;
 
         private GUIStyle selectedStyle;
         private GUIStyle unselectedStyle;
@@ -48,8 +49,7 @@ namespace KerbalChecklist {
         }
 
         private void DrawChecklists() {
-            // TODO this is going to be a problem
-            GUILayout.BeginScrollView( Vector2.zero );
+            scrollPosition = GUILayout.BeginScrollView( scrollPosition );
 
             foreach( Checklist checklist in checklists ) {
                 if( !checklist.visible ) {
