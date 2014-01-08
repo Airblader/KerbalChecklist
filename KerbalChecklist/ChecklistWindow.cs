@@ -24,7 +24,7 @@ namespace KerbalChecklist {
         private const int DEFAULT_WINDOW_WIDTH = 300;
         private const int DEFAULT_WINDOW_HEIGHT = 300;
 
-        public ChecklistWindow( Checklists checklists )
+        public ChecklistWindow( ref Checklists checklists )
             : base( "Kerbal Checklist", DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT ) {
 
             this.checklists = checklists;
@@ -47,8 +47,8 @@ namespace KerbalChecklist {
             config.RemoveNodesWithValue( StateKeys.CRAFT, StateKeys.CRAFT_NAME, EditorLogic.fetch.shipNameField.Text );
             config.Save( KerbalChecklist.craftStatesFile );
 
-            // reload state for current display
-            checklists.LoadState();
+            // reload master checklists file
+            checklists = Checklists.LoadMaster( KerbalChecklist.CHECKLISTS_FILE );
         }
 
         private int GetNumberOfCheckedItems( Checklist checklist ) {

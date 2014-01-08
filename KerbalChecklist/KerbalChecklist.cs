@@ -10,7 +10,7 @@ namespace KerbalChecklist {
     public class KerbalChecklist : MonoBehaviour {
 
         // master file containing the checklist definitions
-        private const string CHECKLISTS_FILE = "checklists.xml";
+        public const string CHECKLISTS_FILE = "checklists.xml";
 
         // contains settings for window position etc.
         public static string windowSettingsFile;
@@ -32,7 +32,7 @@ namespace KerbalChecklist {
             craftStatesFile = IOUtils.GetFilePathFor( this.GetType(), "CraftSettings.cfg" );
 
             checklists = Checklists.LoadMaster( CHECKLISTS_FILE );
-            checklistWindow = new ChecklistWindow( checklists );
+            checklistWindow = new ChecklistWindow( ref checklists );
 
             SetupToolbar();
         }
