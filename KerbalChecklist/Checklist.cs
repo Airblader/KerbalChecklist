@@ -163,7 +163,7 @@ namespace KerbalChecklist {
             return allItems;
         }
 
-        private bool HasSelectedChecklists() {
+        public bool HasSelectedChecklists() {
             foreach( Checklist list in checklists ) {
                 if( list.isSelected ) {
                     return true;

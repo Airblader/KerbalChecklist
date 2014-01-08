@@ -160,6 +160,16 @@ namespace KerbalChecklist {
             }
         }
 
+        public override void SetVisible( bool newValue ) {
+            if( !newValue ) {
+                selectionWindow.SetVisible( false );
+            } else if( !checklists.HasSelectedChecklists() ) {
+                selectionWindow.SetVisible( true );
+            }
+
+            base.SetVisible( newValue );
+        }
+
         override public ConfigNode Save( ConfigNode config ) {
             selectionWindow.Save( config );
             return base.Save( config );
