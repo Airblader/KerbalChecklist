@@ -148,10 +148,12 @@ namespace KerbalChecklist {
                 }
 
                 listNames.Add( list.name );
-            }
 
-            // TODO
-            // 1. List does not contain itself
+                if( list.checklists.Contains( list.name ) ) {
+                    Log.Error( "List with name " + list.name + " contains itself as a mix-in" );
+                    return false;
+                }
+            }
 
             Log.Debug( "Successfully validated loaded checklists." );
             return true;
