@@ -7,11 +7,11 @@ namespace KerbalChecklist {
     [KSPAddon( KSPAddon.Startup.EditorAny, false )]
     public class EditorController : MonoBehaviour {
 
-        private static bool active = false;
+        private static bool controllerIsActive = false;
         private static EditorController _fetch;
         public static EditorController fetch {
             get {
-                if( !active ) {
+                if( !controllerIsActive ) {
                     throw new ApplicationException( "EditorController has not been activated" );
                 }
 
@@ -24,7 +24,7 @@ namespace KerbalChecklist {
         public List<Part> sortedShipList;
 
         public static void Activate() {
-            active = true;
+            controllerIsActive = true;
 
             if( fetch != null ) {
                 fetch.FixedUpdate();
@@ -40,7 +40,7 @@ namespace KerbalChecklist {
         }
 
         void FixedUpdate() {
-            if( !active ) {
+            if( !controllerIsActive ) {
                 return;
             }
 
