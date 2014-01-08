@@ -51,7 +51,9 @@ namespace KerbalChecklist {
 
                 if( rootPart != null ) {
                     bool loadedSavedState = checklists.LoadState();
-                    checklistWindow.SetVisible( loadedSavedState );
+                    if( loadedSavedState ) {
+                        checklistWindow.SetVisible( true );
+                    }
                 }
             }
         }
