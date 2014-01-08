@@ -70,7 +70,6 @@
   <ItemGroup>
     <Compile Include="ChecklistWindow.cs" />
     <Compile Include="Checklist.cs" />
-    <Compile Include="OptionsWindow.cs" />
     <Compile Include="Util\EditorController.cs" />
     <Compile Include="Extensions\ConfigNodeExtensions.cs" />
     <Compile Include="Util\GuiUtils.cs" />

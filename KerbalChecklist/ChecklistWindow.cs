@@ -10,7 +10,6 @@ namespace KerbalChecklist {
 
         private Checklists checklists;
         private SelectionWindow selectionWindow;
-        private OptionsWindow optionsWindow;
 
         private bool displayCheckedItems = true;
 
@@ -20,7 +19,6 @@ namespace KerbalChecklist {
         private GUIStyle checklistSectionHeaderLabelStyle;
         private GUIStyle checklistToggleStyle;
 
-
         private const int DEFAULT_WINDOW_WIDTH = 300;
         private const int DEFAULT_WINDOW_HEIGHT = 300;
 
@@ -29,26 +27,6 @@ namespace KerbalChecklist {
 
             this.checklists = checklists;
             this.selectionWindow = new SelectionWindow( ref checklists.checklists );
-            this.optionsWindow = new OptionsWindow( SetDisplayCheckedItems, DeleteSavedState );
-        }
-
-        private void SetDisplayCheckedItems( bool newValue ) {
-            displayCheckedItems = newValue;
-        }
-
-        // TODO maybe put this into Checklists to the other related methods
-        private void DeleteSavedState() {
-            if( !File.Exists<KerbalChecklist>( KerbalChecklist.craftStatesFile ) ) {
-                return;
-            }
-
-            // remove saved state
-            ConfigNode config = ConfigNode.Load( KerbalChecklist.craftStatesFile );
-            config.RemoveNodesWithValue( StateKeys.CRAFT, StateKeys.CRAFT_NAME, EditorLogic.fetch.shipNameField.Text );
-            config.Save( KerbalChecklist.craftStatesFile );
-
-            // reload master checklists file
-            checklists = Checklists.LoadMaster( KerbalChecklist.CHECKLISTS_FILE );
         }
 
         private int GetNumberOfCheckedItems( Checklist checklist ) {
@@ -65,7 +43,7 @@ namespace KerbalChecklist {
         override protected void DrawWindowContents( int windowID ) {
             DrawChecklists();
             DrawTooltipDisplay();
-            DrawOptionsButton();
+            DrawSettings();
             DrawSelectChecklistsButton();
         }
 
@@ -137,14 +115,9 @@ namespace KerbalChecklist {
             GUILayout.EndHorizontal();
         }
 
-        private void DrawOptionsButton() {
+        private void DrawSettings() {
             GUILayout.BeginHorizontal();
-
-            if( GUILayout.Button( "Options" ) ) {
-                optionsWindow.SetVisible( true );
-                GUI.FocusWindow( optionsWindow.windowId );
-            }
-
+            displayCheckedItems = GUILayout.Toggle( displayCheckedItems, "Display checked items" );
             GUILayout.EndHorizontal();
         }
 
@@ -190,7 +163,6 @@ namespace KerbalChecklist {
         public override void SetVisible( bool newValue ) {
             if( !newValue ) {
                 selectionWindow.SetVisible( false );
-                optionsWindow.SetVisible( false );
             } else if( !checklists.HasSelectedChecklists() ) {
                 selectionWindow.SetVisible( true );
             }
@@ -200,13 +172,11 @@ namespace KerbalChecklist {
 
         override public ConfigNode Save( ConfigNode config ) {
             selectionWindow.Save( config );
-            optionsWindow.Save( config );
             return base.Save( config );
         }
 
         public override ConfigNode Load( ConfigNode config ) {
             selectionWindow.Load( config );
-            optionsWindow.Load( config );
             return base.Load( config );
         }
 
