@@ -40,11 +40,33 @@ namespace KerbalChecklistUnitTest {
             Assert.AreEqual( 3, node.nodes.Count );
         }
 
+        [TestMethod]
+        public void TestHasNodeWithValue() {
+            Assert.IsTrue( WrapIntoNode( CreateNodeWithNameAndProperty( "SUBNODE", "test", "foo" ) )
+                .HasNodeWithValue( "SUBNODE", "test", "foo" ) );
+
+            Assert.IsFalse( WrapIntoNode( CreateNodeWithNameAndProperty( "BAZ", "test", "foo" ) )
+                .HasNodeWithValue( "SUBNODE", "test", "foo" ) );
+
+            Assert.IsFalse( WrapIntoNode( CreateNodeWithNameAndProperty( "SUBNODE", "baz", "foo" ) )
+                .HasNodeWithValue( "SUBNODE", "test", "foo" ) );
+
+            Assert.IsFalse( WrapIntoNode( CreateNodeWithNameAndProperty( "SUBNODE", "test", "baz" ) )
+                .HasNodeWithValue( "SUBNODE", "test", "foo" ) );
+        }
+
         private ConfigNode CreateNodeWithNameAndProperty( string name, string property, string value ) {
             ConfigNode node = new ConfigNode( name );
             node.AddValue( property, value );
 
             return node;
+        }
+
+        private ConfigNode WrapIntoNode( ConfigNode node ) {
+            ConfigNode config = new ConfigNode();
+            config.AddNode( node );
+
+            return config;
         }
 
     }

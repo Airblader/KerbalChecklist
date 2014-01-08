@@ -25,6 +25,19 @@ namespace KerbalChecklist.Extensions {
             }
         }
 
+        /// <summary>
+        /// Returns true if and only if there exists a subnode with given name that has a property with the given value.
+        /// </summary>
+        public static bool HasNodeWithValue( this ConfigNode node, string nodeName, string valueName, string value ) {
+            foreach( ConfigNode subNode in node.GetNodes( nodeName ) ) {
+                if( subNode.GetValue( valueName ) == value ) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
     }
 
 }
