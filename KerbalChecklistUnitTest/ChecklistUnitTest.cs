@@ -1,25 +1,23 @@
 ﻿using System;
 using KerbalChecklist;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System.Collections.Generic;
 
 namespace KerbalChecklistUnitTest {
 
-    [TestClass]
+    [TestFixture]
     public class ChecklistUnitTest {
-
-        [ClassInitialize()]
-        public static void ClassInit( TestContext context ) {
+        [TestFixtureSetUp]
+        public static void ClassInit() {
             Log.ACTIVE = false;
         }
 
-        [ClassCleanup()]
+        [TestFixtureTearDown]
         public static void ClassCleanup() {
             Log.ACTIVE = true;
         }
 
-
-        [TestMethod]
+        [Test]
         public void TestValidate() {
             Checklists checklists = new Checklists();
             checklists.AddChecklist( new Checklist( "Foo" ) );
@@ -30,7 +28,7 @@ namespace KerbalChecklistUnitTest {
             Assert.AreEqual( false, checklists.Validate() );
         }
 
-        [TestMethod]
+        [Test]
         public void TestGetItemsRecursively() {
             Checklist innerInnerList = new Checklist( "Inner Inner List" );
             innerInnerList.AddItem( new Item( "Inner Inner List Item", "" ) );
@@ -54,7 +52,5 @@ namespace KerbalChecklistUnitTest {
             Assert.AreEqual( "Inner List Item", allItems[1].name );
             Assert.AreEqual( "Inner Inner List Item", allItems[2].name );
         }
-
     }
-
 }
