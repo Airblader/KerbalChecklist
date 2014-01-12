@@ -1,12 +1,15 @@
-TODO:
-- clean up crafts with lastUpdate
-- Bug: prevent click on a window to go through to background
-- use additional hash to deal with different crafts of same name (sanity check)
+# TODO #
+########
 
-- checklist type VAB/SPH/both
-- use XML version to auto-update document if needed
-- triggers to include certain checklists
-- automatically pre-check list items
-	- "hasParts" list for checklist item
-	- "delta-V"
-- give items a priority (only "Low", "Med", "high"?)
+- If item appears in mutliple lists, check if it gets updated everywhere
+- Delete saved states if lastUpdate has expired
+- Bug: Click on window is delegated through
+- Use additional hash with vesselName to ensure it's the same craft
+- Remove checklist version
+- Rename "visible" to "isVisible"
+
+- Checklists can have a type VAB/SPH/both (default)
+- Triggers when a checklist should be auto-selected
+- Triggers to check list items automatically
+  - "hasPart"
+  - "deltaV"
